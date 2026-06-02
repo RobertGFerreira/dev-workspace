@@ -96,11 +96,13 @@ Conhecimento especializado de um domínio de negócio — regras, terminologia, 
 | `security-mobile-review.md` | Revisão de segurança em aplicações mobile — autenticação, dados sensíveis, permissões |
 
 ### 🔍 Revisão de Código
-| Arquivo | Descrição |
-|---|---|
-| `flutter-code-review.md` | Revisão geral de código Flutter — boas práticas, padrões, organização |
-| `flutter-analyze-lint.md` | Análise de lint e conformidade com regras do `flutter analyze` |
-| `flutter-state-review.md` | Revisão de gerenciamento de estado — consistência, reatividade, vazamentos |
+
+| Arquivo | Camada | Descrição |
+|---|:---:|---|
+| `code-review-universal.md` | **Universal** | Revisão de qualidade — sem especificidade de linguagem ou framework |
+| `flutter-code-review.md` | Flutter | Revisão geral de código Flutter — boas práticas, padrões, organização |
+| `flutter-analyze-lint.md` | Flutter | Análise de lint e conformidade com regras do `flutter analyze` |
+| `flutter-state-review.md` | Flutter | Revisão de gerenciamento de estado — consistência, reatividade, vazamentos |
 
 ### ✅ Qualidade e Navegação
 | Arquivo | Descrição |
@@ -119,13 +121,15 @@ Conhecimento especializado de um domínio de negócio — regras, terminologia, 
 ### 📄 Documentação
 | Arquivo | Descrição |
 |---|---|
-| `documentation-consistency-review.md` | Revisão de consistência e completude de documentação técnica |
+| `documentation-consistency-review.md` | Revisão de consistência entre código e documentação técnica |
 
-### 🌾 Domínio Específico
+### 🏢 Domínio Específico
 | Arquivo | Descrição |
 |---|---|
-| `condominio-domain-knowledge.md` | Contexto de domínio para projetos de condomínio rural |
-| `trabalhadores-domain-knowledge.md` | Contexto de domínio para gestão de trabalhadores rurais |
+| `condominio-domain-knowledge.md` | Contexto de domínio para gestão de propriedades rurais |
+| `trabalhadores-domain-knowledge.md` | Contexto de domínio para gestão de recursos humanos rurais |
+
+> **Nota:** Skills de domínio específico são conhecimento de negócio de um projeto — não são regras técnicas universais. Nunca devem ser invocadas como substituto de skills universais.
 
 ### 📄 Template Base
 | Arquivo | Descrição |

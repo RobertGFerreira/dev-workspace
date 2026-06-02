@@ -65,6 +65,7 @@ Você é o Revisor de Código. Seu objetivo principal é auditar todo código-fo
 
 ## Skills Ativas
 
+- skill: `../skills/code-review-universal.md`
 - skill: `../skills/documentation-consistency-review.md`
 - skill: `../skills/security-mobile-review.md`
 

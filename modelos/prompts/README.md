@@ -62,23 +62,35 @@ Instrui a criação de documentação, especificações, roadmaps ou outros arte
 | `repo-map-analyst.md` | Análise e mapeamento de estrutura de repositório |
 | `seguranca-conformidade.md` | Auditoria de segurança e conformidade técnica |
 | `guardiao-fluxo.md` | Verificação de desvios arquiteturais e de processo |
+| `agente-testes.md` | Auditoria de estratégia de testes e cobertura |
 
-### 📋 Geração — Documentação e Especificação
+### 📋 Geração — Documentação, Especificação e Arquitetura
 | Arquivo | Descrição |
 |---|---|
 | `documentacao-requisitos.md` | Levantamento e estruturação de requisitos |
 | `spec-agent.md` | Geração de especificações técnicas detalhadas |
+| `agente-arquitetura.md` | ADRs, proteção de fronteiras e dívida técnica |
 | `orquestrador-planejamento.md` | Planejamento de ciclo de desenvolvimento e orquestração de tarefas |
 
 ### 🎨 Front-end / UI/UX
 | Arquivo | Descrição |
 |---|---|
-| `design-ui-ux-pro.md` | Design de interfaces com padrões avançados de UX |
+| `design-ui-ux-pro.md` | Design de interfaces com padrões avançados de UX (Flutter) |
 
 ### 🗄️ Back-end / Banco de Dados
 | Arquivo | Descrição |
 |---|---|
 | `database-architect.md` | Arquitetura e modelagem de banco de dados |
+
+### 🔌 API e Integração
+| Arquivo | Descrição |
+|---|---|
+| `agente-api-contratos.md` | Contratos de API — definição, versionamento e conformidade _(criar)_ |
+
+### ⚙️ CI/CD e Automação
+| Arquivo | Descrição |
+|---|---|
+| `agente-ci-cd.md` | Pipeline de integração e entrega contínua _(criar)_ |
 
 ### 🌾 Domínio Específico
 | Arquivo | Descrição |
