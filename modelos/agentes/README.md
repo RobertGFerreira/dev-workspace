@@ -4,207 +4,230 @@
 
 ---
 
-## O que são Agentes
+## Arquitetura em Camadas
 
-Um agente é uma **entidade de IA com papel definido**. Ao contrário de um prompt genérico, um agente possui:
+```
+┌──────────────────────────────────────────────────────────────┐
+│ CAMADA 1 — Universal                                         │
+│ Qualquer linguagem, stack e tipo de projeto                  │
+├──────────────────────────────────────────────────────────────┤
+│ CAMADA 2 — Especializado por tecnologia                      │
+│ Adiciona regras de stack sem contradizer a Camada 1          │
+├──────────────────────────────────────────────────────────────┤
+│ CAMADA 3 — Especializado por domínio de negócio              │
+│ Adiciona contexto de negócio sobre as camadas anteriores     │
+├──────────────────────────────────────────────────────────────┤
+│ CAMADA 4 — Específico de projeto                             │
+│ Cópias em governance/agents/ do repositório de destino       │
+│ NUNCA em modelos/ — é artefato do projeto                    │
+└──────────────────────────────────────────────────────────────┘
+```
 
-- **Identidade**: nome, papel e objetivo principal.
-- **Contexto**: conhecimento do domínio em que atua.
-- **Regras de comportamento**: o que fazer, o que nunca fazer e como responder.
-- **Vínculos**: quais prompts e skills ele utiliza para ampliar sua atuação.
-
-Agentes são usados pelas ferramentas de IA (Antigravity, Codex, Continue, etc.) para orientar o comportamento do modelo durante uma sessão ou tarefa específica.
-
----
-
-## Tipos de Agentes
-
-### Orquestradores
-Coordenam o fluxo de trabalho entre outros agentes. Definem a sequência de ações, delegam tarefas, validam pré-condições e consolidam resultados. São o ponto de entrada para pipelines complexos.
-
-**Exemplos nesta pasta:** `orquestrador-agentes.md`
-
-### Revisores
-Atuam após a geração de código ou documentação. Verificam qualidade, conformidade com padrões, segurança e cobertura de testes. Geralmente invocados ao final de um ciclo.
-
-**Exemplos nesta pasta:** `revisor-codigo.md`, `quality-gate.md`
-
-### Planejadores
-Auxiliam na definição de requisitos, escopo, arquitetura e estratégia antes da implementação. Produzem especificações e planos de ação.
-
-**Exemplos nesta pasta:** `spec-agent.md`, `documentacao-requisitos.md`
-
-### Validadores / Guardiões
-Verificam pré e pós-condições em momentos críticos do fluxo — antes de um commit, antes de uma entrega, ou após uma mudança de arquitetura. Bloqueiam ações indesejadas.
-
-**Exemplos nesta pasta:** `commit-guardian.md`, `guardiao-fluxo.md`, `seguranca-conformidade.md`
-
-### Especialistas de Domínio
-Possuem conhecimento técnico aprofundado em uma tecnologia ou domínio específico. Atuam em tarefas especializadas que exigem precisão contextual.
-
-**Exemplos nesta pasta:** `flutter-ui-ux-pro.md`, `flutter-state-arch.md`, `sync-data-guard.md`, `design-ui-ux-pro.md`
-
-### Configuradores / Bootstrap
-Responsáveis por inicializar projetos com governança, estrutura e padrões desde o primeiro commit. Atuam uma única vez ou em marcos de configuração.
-
-**Exemplos nesta pasta:** `agente-configuracao-governanca.md`, `bootstrap-governanca.md`
-
-### Analistas
-Processam repositórios, relatórios ou bases de código para gerar diagnósticos, mapas e inventários. Produzem outputs estruturados para uso posterior.
-
-**Exemplos nesta pasta:** `repo-map-analyst.md`, `ideias-exploracao.md`
+**Regras de extensão:**
+1. Agente especializado declara `Herda de: {agente-pai}` no metadado.
+2. Especializado adiciona regras — nunca remove regras do universal.
+3. Quando uma regra especializada contradiz o universal, o universal prevalece.
+4. Links de skills e prompts usam caminhos relativos (`../skills/`, `../prompts/`).
 
 ---
 
-## Lista de Agentes por Categoria
+## Inventário de Agentes
 
-### 🎯 Orquestradores
-| Arquivo | Descrição |
-|---|---|
-| `orquestrador-agentes.md` | Pipeline central de coordenação de agentes; define sequência e delegação |
+### Camada 1 — Universais
 
-### 🔍 Revisores
-| Arquivo | Descrição |
-|---|---|
-| `revisor-codigo.md` | Revisão de código com foco em qualidade, padrões e boas práticas |
-| `quality-gate.md` | Gate de qualidade — bloqueia entregas que não atendem critérios mínimos |
+| Agente | Propósito | Skills vinculadas | Prompt vinculado | Status |
+|:---|:---|:---|:---|:---:|
+| `orquestrador-agentes` | Pipeline central de triagem e delegação | `documentation-consistency-review` | `orquestrador-agentes` | `active` |
+| `revisor-codigo` | Revisão de código — qualidade, segurança, padrões | `documentation-consistency-review`, `security-mobile-review` | `revisor-codigo` | `active` |
+| `quality-gate` | Verificação transversal final antes de entrega | `documentation-consistency-review` | `quality-gate` | `active` |
+| `spec-agent` | Especificações técnicas, fronteiras e planos | `documentation-consistency-review`, `anti-ai-generic-ui` | `spec-agent` | `active` |
+| `documentacao-requisitos` | Manutenção de documentação e requisitos | `documentation-consistency-review` | `documentacao-requisitos` | `active` |
+| `commit-guardian` | Validação pré-commit (atomicidade, padrão, segredos) | `documentation-consistency-review` | `commit-guardian` | `active` |
+| `guardiao-fluxo` | Proteção de fluxos críticos do sistema | `navigation-flow-review`, `offline-sync-review` | `guardiao-fluxo` | `active` |
+| `seguranca-conformidade` | Segurança, privacidade e conformidade regulatória | `security-mobile-review`, `forms-validation-review`, `flutter-api-integration` | `seguranca-conformidade` | `active` |
+| `repo-map-analyst` | Mapeamento de estrutura de repositório | `documentation-consistency-review` | `repo-map-analyst` | `active` |
+| `bootstrap-governanca` | Inicialização de governança (Day-0) | `documentation-consistency-review` | `bootstrap-governanca` | `active` |
+| `agente-configuracao-governanca` | Edição contínua de arquivos de governança | `documentation-consistency-review` | `bootstrap-governanca` | `active` |
+| `agente-testes` | Estratégia de testes, cobertura e critérios de aceite | `documentation-consistency-review` | _(criar)_ | `active` |
+| `agente-arquitetura` | ADRs, proteção de fronteiras e dívida técnica | `documentation-consistency-review` | _(criar)_ | `active` |
+| `ideias-exploracao` | Discovery, exploração técnica e análise de alternativas | — | `ideias-exploracao` | `active` |
 
-### 📋 Planejadores
-| Arquivo | Descrição |
-|---|---|
-| `spec-agent.md` | Geração de especificações técnicas a partir de requisitos |
-| `documentacao-requisitos.md` | Levantamento e estruturação de requisitos funcionais e não-funcionais |
+### Camada 2 — Flutter
 
-### 🛡️ Validadores / Guardiões
-| Arquivo | Descrição |
-|---|---|
-| `commit-guardian.md` | Verifica pré-condições antes de cada commit |
-| `guardiao-fluxo.md` | Protege o fluxo de trabalho contra desvios arquiteturais |
-| `seguranca-conformidade.md` | Auditoria de segurança e conformidade regulatória |
-| `sync-data-guard.md` | Valida integridade de sincronização offline/online de dados |
+| Agente | Propósito | Herda de | Skills vinculadas | Status |
+|:---|:---|:---|:---|:---:|
+| `flutter-ui-ux-pro` | UI/UX em Flutter — responsividade, tema, acessibilidade | `(agente-ui-ux-universal)` | `ui-ux-pro-review`, `anti-ai-generic-ui`, `flutter-ui-standards` | `active` |
+| `flutter-state-arch` | Arquitetura de estado Flutter — GetX, Riverpod, BLoC, Provider | `agente-arquitetura` | `flutter-state-review`, `flutter-code-review`, `flutter-performance-guard` | `active` |
+| `sync-data-guard` | Sincronização offline/online e integridade SQLite | `guardiao-fluxo` | `offline-sync-review`, `sqlite-integrity-review`, `flutter-sqlite-review` | `active` |
 
-### 🔧 Especialistas de Domínio
-| Arquivo | Descrição |
-|---|---|
-| `flutter-ui-ux-pro.md` | Padrões de UI/UX em Flutter com foco em qualidade visual |
-| `flutter-state-arch.md` | Arquitetura de estado em Flutter (Riverpod, BLoC, etc.) |
-| `design-ui-ux-pro.md` | Design de interfaces com princípios de UX avançados |
+### Depreciados
 
-### ⚙️ Configuradores / Bootstrap
-| Arquivo | Descrição |
-|---|---|
-| `agente-configuracao-governanca.md` | Configura governança inicial de um novo projeto |
-| `bootstrap-governanca.md` | Inicializa estrutura mínima de agentes e prompts num repositório |
+| Agente | Motivo | Substituto |
+|:---|:---|:---|
+| `design-ui-ux-pro` | 80% de sobreposição com `flutter-ui-ux-pro` | `flutter-ui-ux-pro` |
 
-### 🔎 Analistas
-| Arquivo | Descrição |
-|---|---|
-| `repo-map-analyst.md` | Mapeia e analisa estrutura de repositórios |
-| `ideias-exploracao.md` | Agente de exploração criativa para ideação de features e soluções |
+### Template base
 
-### 📄 Template Base
 | Arquivo | Descrição |
-|---|---|
-| `AGENTE_UNIVERSAL.template.md` | Template universal para criação de novos agentes |
+|:---|:---|
+| `AGENTE_UNIVERSAL.template.md` | Template para criação de novos agentes |
 
 ---
 
-## Fluxograma de Atuação
+## Metadado Obrigatório
+
+Todo agente deve conter o seguinte bloco no início do arquivo:
+
+```markdown
+| Campo | Valor |
+|:---|:---|
+| **Versão** | `X.Y.Z` |
+| **Camada** | `Universal` / `Flutter` / `{Tecnologia}` / `Projeto` |
+| **Herda de** | `{agente-pai}` ou `—` |
+| **Status** | `active` / `draft` / `deprecated` / `archived` |
+| **Domínio** | `Geral` / `Flutter` / `Backend` / ... |
+| **Atualizado em** | `AAAA-MM-DD` |
+```
+
+---
+
+## Fluxo de Orquestração
 
 ```mermaid
 flowchart TD
-    classDef orchestrator fill:#4f46e5,color:#fff,stroke:#3730a3,rx:8
-    classDef planner fill:#0891b2,color:#fff,stroke:#0e7490,rx:8
-    classDef specialist fill:#059669,color:#fff,stroke:#047857,rx:8
-    classDef reviewer fill:#d97706,color:#fff,stroke:#b45309,rx:8
-    classDef validator fill:#dc2626,color:#fff,stroke:#b91c1c,rx:8
-    classDef bootstrap fill:#7c3aed,color:#fff,stroke:#6d28d9,rx:8
-    classDef analyst fill:#64748b,color:#fff,stroke:#475569,rx:8
+    classDef universal fill:#1e40af,color:#fff,stroke:#1e3a8a
+    classDef flutter fill:#059669,color:#fff,stroke:#047857
+    classDef validator fill:#dc2626,color:#fff,stroke:#b91c1c
+    classDef analyst fill:#64748b,color:#fff,stroke:#475569
     classDef io fill:#f8fafc,color:#1e293b,stroke:#94a3b8
 
-    TRIGGER([🚀 Trigger / Usuário]):::io
-    ENTREGA([✅ Entrega aprovada]):::io
-    LOOP([🔁 Retorno para revisão]):::io
+    TRIGGER([🚀 Demanda]):::io
+    ENTREGA([✅ Entrega]):::io
+    LOOP([🔁 Revisão]):::io
 
     TRIGGER --> OR
 
-    subgraph ORQUESTRAÇÃO ["⚙️ Orquestração"]
-        OR["🎯 Orquestrador\norquestrador-agentes"]:::orchestrator
+    subgraph ORQUESTRAÇÃO
+        OR["orquestrador"]:::universal
     end
 
-    OR --> CF
     OR --> PL
     OR --> ES
+    OR --> AN
 
-    subgraph CONFIGURAÇÃO ["🔧 Configuração / Bootstrap"]
-        CF["⚙️ Configurador\nbootstrap-governanca\nagente-configuracao-governanca"]:::bootstrap
+    subgraph PLANEJAMENTO
+        PL["spec-agent\ndocumentacao\nagente-arquitetura"]:::universal
     end
 
-    subgraph PLANEJAMENTO ["📋 Planejamento"]
-        PL["📋 Planejador\nspec-agent\ndocumentacao-requisitos\norquestrador-planejamento"]:::planner
+    subgraph EXECUÇÃO
+        ES["flutter-ui-ux-pro\nflutter-state-arch\nsync-data-guard\n(especialistas)"]:::flutter
     end
 
-    subgraph EXECUÇÃO ["🔨 Execução Especializada"]
-        ES["🔨 Especialista\nflutter-ui-ux-pro\nflutter-state-arch\ndesign-ui-ux-pro\nsync-data-guard"]:::specialist
+    subgraph ANÁLISE
+        AN["repo-map\nideias-exploracao"]:::analyst
     end
 
     PL --> RV
     ES --> RV
-    CF --> RV
+    AN -.-> OR
 
-    subgraph REVISÃO ["🔍 Revisão"]
-        RV["🔍 Revisor\nrevisor-codigo\nquality-gate"]:::reviewer
+    subgraph REVISÃO
+        RV["revisor-codigo\nagente-testes"]:::universal
     end
 
     RV --> VL
 
-    subgraph VALIDAÇÃO ["🛡️ Validação Final"]
-        VL{"🛡️ Validador\ncommit-guardian\nguardiao-fluxo"}:::validator
+    subgraph VALIDAÇÃO
+        VL{"quality-gate\ncommit-guardian\nguardiao-fluxo\nseguranca"}:::validator
     end
 
     VL -->|✅ Aprovado| ENTREGA
     VL -->|❌ Reprovado| LOOP
     LOOP --> OR
-
-    AN["🔎 Analista\nrepo-map-analyst\nideias-exploracao"]:::analyst
-    SG["🔐 Segurança\nseguranca-conformidade"]:::analyst
-
-    AN -. "diagnóstico assíncrono" .-> OR
-    SG -. "auditoria de segurança" .-> VL
 ```
 
-> **Leitura do fluxo:**
-> - O **Orquestrador** é o único ponto de entrada — ele distribui o trabalho.
-> - **Planejadores**, **Especialistas** e **Configuradores** atuam em paralelo conforme o tipo de tarefa.
-> - O **Revisor** consolida as saídas antes da validação final.
-> - O **Validador** é o guardião da entrega — reprova e devolve ao Orquestrador se os critérios não forem atendidos.
-> - **Analistas** e **Segurança** operam de forma assíncrona, alimentando o ciclo sem bloqueá-lo.
+---
+
+## Governance
+
+### Lifecycle de agentes
+
+```
+[draft] → [active] → [maintenance] → [deprecated] → [archived]
+```
+
+| Status | Significado | Edição permitida |
+|:---|:---|:---|
+| `draft` | Em construção | Livre |
+| `active` | Uso recomendado | Somente via PR com review |
+| `maintenance` | Apenas correções críticas | Somente PATCH |
+| `deprecated` | Substituído — não usar em novos projetos | Somente leitura |
+| `archived` | Inativo — preservado em `_deprecated/` | Somente leitura |
+
+### Versionamento semântico
+
+| Incremento | Quando |
+|:---|:---|
+| `PATCH` (X.Y.**Z**) | Ajuste de texto, correção de regra |
+| `MINOR` (X.**Y**.Z) | Adição de skill, regra ou seção sem quebrar compatibilidade |
+| `MAJOR` (**X**.Y.Z) | Mudança de escopo, remoção de regra, mudança de identidade |
+
+### Naming convention
+
+| Camada | Padrão |
+|:---|:---|
+| Universal | `{funcao}` sem prefixo de tecnologia |
+| Tecnologia (Camada 2) | `{tecnologia}-{funcao}` |
+| Domínio (Camada 3) | `{dominio}-{funcao}` |
+| Template | `{NOME}.template.md` em MAIÚSCULAS |
+| Depreciado | Arquivo com aviso de deprecação, git history preservado |
+
+### Critérios de depreciação
+
+- Sem uso confirmado por 6 meses + existe substituto ativo.
+- Conteúdo foi absorvido por agente mais abrangente.
+- Tecnologia-alvo foi descontinuada.
 
 ---
 
-## Como Reutilizar um Agente
+## Matriz Agente × Skill × Prompt
 
-1. **Leia o arquivo completo** — entenda a identidade, contexto, regras e vínculos do agente.
-2. **Avalie o escopo** — o agente é genérico o suficiente para sua necessidade? Ou precisa de adaptação?
-3. **Copie para o projeto** — coloque em `governance/agents/` ou caminho equivalente do repositório destino.
-4. **Adapte o contexto** — substitua referências genéricas pelas especificidades do projeto.
-5. **Vincule prompts e skills** — atualize as seções `## Skills Ativas` e `## Prompts de Referência`.
-6. **Não modifique o original** em `modelos/agentes/` — edite apenas a cópia.
-
-### Agentes mais genéricos (menor adaptação necessária)
-`revisor-codigo.md`, `commit-guardian.md`, `spec-agent.md`, `quality-gate.md`, `repo-map-analyst.md`
-
-### Agentes mais específicos (requerem adaptação substancial)
-`flutter-ui-ux-pro.md`, `sync-data-guard.md`, `agente-configuracao-governanca.md`
+| Agente | Skill 1 | Skill 2 | Skill 3 | Prompt |
+|:---|:---|:---|:---|:---|
+| `orquestrador-agentes` | doc-consistency | — | — | orquestrador-agentes |
+| `revisor-codigo` | doc-consistency | security-mobile | — | revisor-codigo |
+| `quality-gate` | doc-consistency | — | — | quality-gate |
+| `spec-agent` | doc-consistency | anti-ai-generic-ui | — | spec-agent |
+| `documentacao-requisitos` | doc-consistency | — | — | documentacao-requisitos |
+| `commit-guardian` | doc-consistency | — | — | commit-guardian |
+| `guardiao-fluxo` | navigation-flow | offline-sync | — | guardiao-fluxo |
+| `seguranca-conformidade` | security-mobile | forms-validation | flutter-api | seguranca-conformidade |
+| `repo-map-analyst` | doc-consistency | — | — | repo-map-analyst |
+| `agente-testes` | doc-consistency | — | — | _(criar)_ |
+| `agente-arquitetura` | doc-consistency | — | — | _(criar)_ |
+| `flutter-ui-ux-pro` | ui-ux-pro | anti-ai-generic-ui | flutter-ui-standards | design-ui-ux-pro |
+| `flutter-state-arch` | flutter-state | flutter-code | flutter-perf | _(criar)_ |
+| `sync-data-guard` | offline-sync | sqlite-integrity | flutter-sqlite | — |
 
 ---
 
-## Critérios de Manutenção
+## Como Usar um Agente
 
-- Um agente deve ser atualizado quando suas **regras ficarem desatualizadas** em relação ao projeto que o originou.
-- Agentes obsoletos vão para `_deprecated/` — nunca são deletados diretamente.
-- Agentes duplicados com pequenas variações devem ser consolidados em um único agente parametrizável.
-- Toda atualização de agente deve ser versionada via `git commit` com mensagem descritiva.
+1. **Identifique o agente correto** na tabela acima para o tipo de tarefa.
+2. **Leia o arquivo completo** — identidade, contexto, regras e vínculos.
+3. **Avalie o escopo** — o agente é genérico o suficiente? Ou precisa de adaptação para o projeto?
+4. **Copie para o projeto** — coloque em `governance/agents/` do repositório destino.
+5. **Preencha o contexto** — substitua `{{PLACEHOLDERS}}` pelas especificidades do projeto.
+6. **Vincule prompts e skills** — atualize as seções de skills e prompts com os caminhos corretos.
+7. **Não modifique o original** em `modelos/agentes/` — edite apenas a cópia no projeto.
+
+### Agentes mais reutilizáveis (mínima adaptação)
+
+`revisor-codigo` · `commit-guardian` · `spec-agent` · `quality-gate` · `repo-map-analyst` · `ideias-exploracao` · `agente-testes`
+
+### Agentes que requerem adaptação substancial
+
+`orquestrador-agentes` · `guardiao-fluxo` · `agente-arquitetura` · `flutter-ui-ux-pro` · `sync-data-guard`
 
 ---
 
@@ -217,6 +240,4 @@ Agente
   └─► usa Skills    → capacidades técnicas que ampliam o escopo de atuação
 ```
 
-Um agente **orquestra** o uso de prompts e skills — ele define o contexto e as regras, enquanto prompts e skills fornecem a execução especializada.
-
-> Consulte [`prompts/README.md`](../prompts/README.md) e [`skills/README.md`](../skills/README.md) para entender os artefatos disponíveis.
+> Consulte [`../prompts/README.md`](../prompts/README.md) e [`../skills/README.md`](../skills/README.md).
