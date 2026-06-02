@@ -63,6 +63,7 @@ Instrui a criação de documentação, especificações, roadmaps ou outros arte
 | `seguranca-conformidade.md` | Auditoria de segurança e conformidade técnica |
 | `guardiao-fluxo.md` | Verificação de desvios arquiteturais e de processo |
 | `agente-testes.md` | Auditoria de estratégia de testes e cobertura |
+| `validador-documentacao.md` | Auditoria estrutural e lints markdown de templates |
 
 ### 📋 Geração — Documentação, Especificação e Arquitetura
 | Arquivo | Descrição |
@@ -78,6 +79,20 @@ Instrui a criação de documentação, especificações, roadmaps ou outros arte
 | `design-ui-ux-pro.md` | Design de interfaces com padrões avançados de UX (Flutter) |
 | `flutter-state-arch.md` | Arquitetura de estado e fluxo de dados em Flutter |
 
+### 🎮 Desenvolvimento de Jogos (Games)
+| Arquivo | Descrição |
+|---|---|
+| `criador-games.md` | Orquestração e diretor criativo de desenvolvimento de games |
+| `estrutura-games.md` | Balanceamento de mecânicas e progresso de jogo |
+| `narrativa-games.md` | Enredo, lore, diálogos e ramificações da história |
+| `criativo-games.md` | Identidade visual, HUD, menus e UX de games |
+| `monetizacao-games.md` | Economia virtual do jogo, passes, anúncios e preços |
+
+### 📢 Marketing e Vendas
+| Arquivo | Descrição |
+|---|---|
+| `marketing-sistemas.md` | Posicionamento, copies de conversão e lançamentos de SaaS/apps |
+
 ### 🗄️ Back-end / Banco de Dados
 | Arquivo | Descrição |
 |---|---|
@@ -92,6 +107,11 @@ Instrui a criação de documentação, especificações, roadmaps ou outros arte
 | Arquivo | Descrição |
 |---|---|
 | `agente-ci-cd.md` | Pipeline de integração e entrega contínua |
+
+### 📦 Distribuição e Lojas
+| Arquivo | Descrição |
+|---|---|
+| `google-play-support.md` | Suporte à publicação e políticas do Google Play Console |
 
 ### 🌾 Domínio Específico
 | Arquivo | Descrição |

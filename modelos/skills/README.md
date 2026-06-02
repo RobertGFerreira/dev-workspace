@@ -130,6 +130,42 @@ Conhecimento especializado de um domínio de negócio — regras, terminologia, 
 | Arquivo | Descrição |
 |---|---|
 | `documentation-consistency-review.md` | Revisão de consistência entre código e documentação técnica |
+| `documentation-consistency.md` | Validação de consistência cruzada entre arquivos do repositório |
+| `template-adherence.md` | Validação de correspondência com as diretrizes do template original |
+| `structure-review.md` | Validação estrutural de documentos, H1-H6 e índices markdown |
+| `markdown-quality.md` | Lint geral de Markdown (links, formatação, espaçamento) |
+| `placeholder-governance.md` | Rastreamento e bloqueio de placeholders não preenchidos |
+
+### 🎮 Desenvolvimento de Jogos (Games)
+| Arquivo | Descrição |
+|---|---|
+| `game-structure-planning.md` | Planejamento de fluxos, cenas, fases e estruturas gerais de jogos |
+| `game-narrative-design.md` | Estruturação de enredos, lore de mundo, diálogos ramificados |
+| `game-loop-design.md` | Modelagem do loop de jogabilidade central (core loop) e ciclos de retenção |
+| `game-mechanics-balance.md` | Balanceamento de mecânicas de jogo, regras e curvas de progressão |
+| `game-ux-ui.md` | Princípios de UI/UX aplicados a games, layouts de HUD e feedback |
+| `game-monetization-strategy.md` | Economia in-game, passes, anúncios e compras integradas |
+| `game-release-readiness.md` | Validação de builds de jogos, assets e readiness para publicação |
+
+### 📢 Marketing de Sistemas
+| Arquivo | Descrição |
+|---|---|
+| `product-positioning.md` | Posicionamento competitivo de software, SaaS e apps em mercados alvo |
+| `audience-segmentation.md` | Segmentação de público-alvo, criação de personas e perfis de clientes |
+| `value-proposition-writing.md` | Redação de propostas de valor claras e impactantes para software |
+| `launch-campaign-planning.md` | Planejamento de campanhas de lançamento digital e aquisição |
+| `conversion-copy-review.md` | Revisão de copy para otimização de conversão (CRO) e CTAs |
+| `feature-storytelling.md` | Conversão de características técnicas em histórias e benefícios do usuário |
+
+### 📦 Distribuição e Lojas
+| Arquivo | Descrição |
+|---|---|
+| `play-console-checklist.md` | Checklist estruturado de etapas e formulários para o Google Play Console |
+| `store-listing-optimization.md` | Otimização de metadados para busca (ASO) na listagem da loja |
+| `android-policy-review.md` | Auditoria de conformidade com as políticas de desenvolvedor do Google Play |
+| `asset-compliance.md` | Auditoria de formatos e resoluções de imagens exigidas pelas lojas |
+| `release-readiness.md` | Validação final de chaves, assinaturas, tamanho e bundle (AAB) |
+| `privacy-disclosure-review.md` | Auditoria de políticas de privacidade e declaração de coleta de dados |
 
 ### 🏢 Domínio Específico
 | Arquivo | Descrição |

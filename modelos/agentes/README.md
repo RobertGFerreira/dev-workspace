@@ -53,9 +53,17 @@
 | `agente-api-contratos` | Definição, versionamento e conformidade de APIs | `documentation-consistency-review`, `flutter-api-integration` | `agente-api-contratos` | `active` |
 | `agente-ci-cd` | Pipeline de integração e entrega contínua (CI/CD) | `documentation-consistency-review`, `security-mobile-review` | `agente-ci-cd` | `active` |
 | `agente-performance` | Otimização de performance, consumo de recursos e latência | `code-review-universal`, `performance-universal` | — | `active` |
+| `criador-games` | Orquestração e diretor criativo de games | `game-loop-design`, `game-release-readiness` | `criador-games` | `active` |
+| `estrutura-games` | Balanceamento de mecânicas e progresso de jogo | `game-structure-planning`, `game-loop-design`, `game-mechanics-balance` | `estrutura-games` | `active` |
+| `narrativa-games` | Enredo, lore de mundo, diálogos e ramificações | `game-narrative-design` | `narrativa-games` | `active` |
+| `criativo-games` | Identidade visual, HUD, menus e UX de games | `game-ux-ui`, `ui-ux-pro-review` | `criativo-games` | `active` |
+| `monetizacao-games` | Economia in-game, passes, anúncios e precificação | `game-monetization-strategy`, `game-mechanics-balance` | `monetizacao-games` | `active` |
+| `marketing-sistemas` | Posicionamento, copies de conversão e lançamentos | `product-positioning`, `audience-segmentation`, `value-proposition-writing` | `marketing-sistemas` | `active` |
+| `validador-documentacao` | Conformidade e lints markdown de templates | `documentation-consistency`, `template-adherence`, `structure-review`, `markdown-quality`, `placeholder-governance` | `validador-documentacao` | `active` |
+| `distribuidor-aplicativos` | Preparação, chaves de assinatura e readiness de release | `release-readiness`, `asset-compliance`, `privacy-disclosure-review` | — | `active` |
 | `ideias-exploracao` | Discovery, exploração técnica e análise de alternativas | — | `ideias-exploracao` | `active` |
 
-### Camada 2 — Flutter
+### Camada 2 — Especializados (Tecnologia/Plataforma)
 
 | Agente | Propósito | Herda de | Skills vinculadas | Status |
 |:---|:---|:---|:---|:---:|
@@ -64,6 +72,7 @@
 | `flutter-ui-ux-pro` | UI/UX em Flutter — responsividade, tema, acessibilidade | `(agente-ui-ux-universal)` | `ui-ux-pro-review`, `anti-ai-generic-ui`, `flutter-ui-standards` | `active` |
 | `flutter-state-arch` | Arquitetura de estado Flutter — GetX, Riverpod, BLoC, Provider | `agente-arquitetura` | `flutter-state-review`, `flutter-code-review`, `flutter-performance-guard` | `active` |
 | `sync-data-guard` | Sincronização offline/online e integridade SQLite | `guardiao-fluxo` | `offline-sync-review`, `sqlite-integrity-review`, `flutter-sqlite-review` | `active` |
+| `google-play-support` | Suporte à publicação e políticas do Google Play Console | `distribuidor-aplicativos` | `play-console-checklist`, `store-listing-optimization`, `android-policy-review`, `asset-compliance`, `release-readiness`, `privacy-disclosure-review` | `active` |
 
 ### Depreciados
 
@@ -213,11 +222,20 @@ flowchart TD
 | `agente-api-contratos` | doc-consistency | flutter-api | — | agente-api-contratos |
 | `agente-ci-cd` | doc-consistency | security-mobile | — | agente-ci-cd |
 | `agente-performance` | code-review-universal | performance-universal | — | — |
+| `criador-games` | game-loop-design | game-release-readiness | — | criador-games |
+| `estrutura-games` | game-structure-planning | game-loop-design | game-mechanics-balance | estrutura-games |
+| `narrativa-games` | game-narrative-design | doc-consistency | — | narrativa-games |
+| `criativo-games` | game-ux-ui | ui-ux-pro | — | criativo-games |
+| `monetizacao-games` | game-monetization-strategy | game-mechanics-balance | — | monetizacao-games |
+| `marketing-sistemas` | product-positioning | audience-segmentation | value-proposition-writing | marketing-sistemas |
+| `validador-documentacao` | documentation-consistency | template-adherence | structure-review | validador-documentacao |
+| `distribuidor-aplicativos` | release-readiness | asset-compliance | privacy-disclosure-review | — |
 | `flutter-revisor-codigo` | code-review-universal | flutter-code | flutter-analyze-lint | revisor-codigo |
 | `flutter-quality-gate` | doc-consistency | flutter-analyze-lint | — | quality-gate |
 | `flutter-ui-ux-pro` | ui-ux-pro | anti-ai-generic-ui | flutter-ui-standards | design-ui-ux-pro |
 | `flutter-state-arch` | flutter-state | flutter-code | flutter-perf | flutter-state-arch |
 | `sync-data-guard` | offline-sync | sqlite-integrity | flutter-sqlite | — |
+| `google-play-support` | play-console-checklist | store-listing-optimization | android-policy-review | google-play-support |
 
 ---
 
