@@ -6,7 +6,7 @@
 | **Camada** | `Universal` |
 | **Herda de** | `documentacao-requisitos` |
 | **Status** | `active` |
-| **Domínio** | `Geral` |
+| **Domínio** | `Marketing` |
 | **Atualizado em** | `2026-06-02` |
 
 ---

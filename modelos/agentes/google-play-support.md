@@ -6,7 +6,7 @@
 | **Camada** | `Plataforma (Camada 2)` |
 | **Herda de** | `distribuidor-aplicativos` |
 | **Status** | `active` |
-| **Domínio** | `Geral` |
+| **Domínio** | `Android / Mobile` |
 | **Atualizado em** | `2026-06-02` |
 
 ---

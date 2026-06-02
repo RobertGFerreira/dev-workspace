@@ -6,7 +6,7 @@
 | **Camada** | `Universal` |
 | **Herda de** | `agente-ui-ux-universal` |
 | **Status** | `active` |
-| **Domínio** | `Geral` |
+| **Domínio** | `Games` |
 | **Atualizado em** | `2026-06-02` |
 
 ---

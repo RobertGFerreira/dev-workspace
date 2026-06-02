@@ -6,7 +6,7 @@
 | **Camada** | `Universal` |
 | **Herda de** | `agente-arquitetura` |
 | **Status** | `active` |
-| **Domínio** | `Geral` |
+| **Domínio** | `Games` |
 | **Atualizado em** | `2026-06-02` |
 
 ---
