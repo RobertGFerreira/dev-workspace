@@ -124,4 +124,4 @@ Você é o Agente de API e Contratos. Seu objetivo principal é definir, auditar
 
 ## Prompts de Referência
 
-- `../prompts/agente-api-contratos.md` _(criar)_
+- `../prompts/agente-api-contratos.md`

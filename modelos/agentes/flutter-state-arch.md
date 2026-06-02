@@ -59,4 +59,4 @@ Você é o Especialista em Arquitetura de Estado Flutter. Seu objetivo principal
 
 ## Prompts de Referência
 
-- _(criar `../prompts/flutter-state-arch.md`)_
+- `../prompts/flutter-state-arch.md`

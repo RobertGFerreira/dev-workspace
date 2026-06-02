@@ -76,6 +76,7 @@ Instrui a criação de documentação, especificações, roadmaps ou outros arte
 | Arquivo | Descrição |
 |---|---|
 | `design-ui-ux-pro.md` | Design de interfaces com padrões avançados de UX (Flutter) |
+| `flutter-state-arch.md` | Arquitetura de estado e fluxo de dados em Flutter |
 
 ### 🗄️ Back-end / Banco de Dados
 | Arquivo | Descrição |
@@ -85,12 +86,12 @@ Instrui a criação de documentação, especificações, roadmaps ou outros arte
 ### 🔌 API e Integração
 | Arquivo | Descrição |
 |---|---|
-| `agente-api-contratos.md` | Contratos de API — definição, versionamento e conformidade _(criar)_ |
+| `agente-api-contratos.md` | Contratos de API — definição, versionamento e conformidade |
 
 ### ⚙️ CI/CD e Automação
 | Arquivo | Descrição |
 |---|---|
-| `agente-ci-cd.md` | Pipeline de integração e entrega contínua _(criar)_ |
+| `agente-ci-cd.md` | Pipeline de integração e entrega contínua |
 
 ### 🌾 Domínio Específico
 | Arquivo | Descrição |

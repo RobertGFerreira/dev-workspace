@@ -103,4 +103,4 @@ Antes de considerar uma feature como concluída:
 
 ## Prompts de Referência
 
-- _(criar `../prompts/agente-testes.md`)_
+- `../prompts/agente-testes.md`

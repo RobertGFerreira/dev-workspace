@@ -103,4 +103,4 @@ Você é o Agente de CI/CD e Automação. Seu objetivo principal é definir, aud
 
 ## Prompts de Referência
 
-- `../prompts/agente-ci-cd.md` _(criar)_
+- `../prompts/agente-ci-cd.md`

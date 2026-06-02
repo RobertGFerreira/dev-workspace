@@ -62,6 +62,9 @@ Capacidades de validação de formulários, fluxos de navegação e conformidade
 ### Integração
 Capacidades de verificação de integrações com APIs, serviços externos e fluxos de dados.
 
+### Performance
+Capacidades de monitoramento, auditoria e otimização de desempenho, consumo de recursos e latência.
+
 ### Documentação
 Capacidades de revisão de consistência e completude de documentação técnica e de projeto.
 
@@ -116,7 +119,12 @@ Conhecimento especializado de um domínio de negócio — regras, terminologia, 
 |---|---|
 | `flutter-api-integration.md` | Revisão de integrações com APIs REST — erros, timeouts, cache |
 | `flutter-photos-files.md` | Revisão de acesso a fotos e sistema de arquivos em Flutter |
-| `flutter-performance-guard.md` | Monitoramento de performance — renderização, janks, memory leaks |
+
+### ⚡ Performance
+| Arquivo | Camada | Descrição |
+|---|:---:|---|
+| `performance-universal.md` | **Universal** | Auditoria e otimização de performance geral, uso de recursos, concorrência e banco de dados |
+| `flutter-performance-guard.md` | Flutter | Monitoramento de performance — renderização, janks, memory leaks |
 
 ### 📄 Documentação
 | Arquivo | Descrição |

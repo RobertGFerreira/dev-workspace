@@ -116,4 +116,4 @@ flowchart TD
 
 ## Prompts de Referência
 
-- _(criar `../prompts/agente-arquitetura.md`)_
+- `../prompts/agente-arquitetura.md`

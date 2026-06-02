@@ -48,14 +48,19 @@
 | `repo-map-analyst` | Mapeamento de estrutura de repositório | `documentation-consistency-review` | `repo-map-analyst` | `active` |
 | `bootstrap-governanca` | Inicialização de governança (Day-0) | `documentation-consistency-review` | `bootstrap-governanca` | `active` |
 | `agente-configuracao-governanca` | Edição contínua de arquivos de governança | `documentation-consistency-review` | `bootstrap-governanca` | `active` |
-| `agente-testes` | Estratégia de testes, cobertura e critérios de aceite | `documentation-consistency-review` | _(criar)_ | `active` |
-| `agente-arquitetura` | ADRs, proteção de fronteiras e dívida técnica | `documentation-consistency-review` | _(criar)_ | `active` |
+| `agente-testes` | Estratégia de testes, cobertura e critérios de aceite | `documentation-consistency-review` | `agente-testes` | `active` |
+| `agente-arquitetura` | ADRs, proteção de fronteiras e dívida técnica | `documentation-consistency-review` | `agente-arquitetura` | `active` |
+| `agente-api-contratos` | Definição, versionamento e conformidade de APIs | `documentation-consistency-review`, `flutter-api-integration` | `agente-api-contratos` | `active` |
+| `agente-ci-cd` | Pipeline de integração e entrega contínua (CI/CD) | `documentation-consistency-review`, `security-mobile-review` | `agente-ci-cd` | `active` |
+| `agente-performance` | Otimização de performance, consumo de recursos e latência | `code-review-universal`, `performance-universal` | — | `active` |
 | `ideias-exploracao` | Discovery, exploração técnica e análise de alternativas | — | `ideias-exploracao` | `active` |
 
 ### Camada 2 — Flutter
 
 | Agente | Propósito | Herda de | Skills vinculadas | Status |
 |:---|:---|:---|:---|:---:|
+| `flutter-revisor-codigo` | Revisão de código Dart/Flutter sênior | `revisor-codigo` | `code-review-universal`, `flutter-code-review`, `documentation-consistency-review`, `security-mobile-review`, `flutter-analyze-lint` | `active` |
+| `flutter-quality-gate` | Gate final de qualidade e análise estática Flutter | `quality-gate` | `documentation-consistency-review`, `flutter-analyze-lint` | `active` |
 | `flutter-ui-ux-pro` | UI/UX em Flutter — responsividade, tema, acessibilidade | `(agente-ui-ux-universal)` | `ui-ux-pro-review`, `anti-ai-generic-ui`, `flutter-ui-standards` | `active` |
 | `flutter-state-arch` | Arquitetura de estado Flutter — GetX, Riverpod, BLoC, Provider | `agente-arquitetura` | `flutter-state-review`, `flutter-code-review`, `flutter-performance-guard` | `active` |
 | `sync-data-guard` | Sincronização offline/online e integridade SQLite | `guardiao-fluxo` | `offline-sync-review`, `sqlite-integrity-review`, `flutter-sqlite-review` | `active` |
@@ -195,7 +200,7 @@ flowchart TD
 | Agente | Skill 1 | Skill 2 | Skill 3 | Prompt |
 |:---|:---|:---|:---|:---|
 | `orquestrador-agentes` | doc-consistency | — | — | orquestrador-agentes |
-| `revisor-codigo` | doc-consistency | security-mobile | — | revisor-codigo |
+| `revisor-codigo` | doc-consistency | security-mobile | code-review-universal | revisor-codigo |
 | `quality-gate` | doc-consistency | — | — | quality-gate |
 | `spec-agent` | doc-consistency | anti-ai-generic-ui | — | spec-agent |
 | `documentacao-requisitos` | doc-consistency | — | — | documentacao-requisitos |
@@ -203,10 +208,15 @@ flowchart TD
 | `guardiao-fluxo` | navigation-flow | offline-sync | — | guardiao-fluxo |
 | `seguranca-conformidade` | security-mobile | forms-validation | flutter-api | seguranca-conformidade |
 | `repo-map-analyst` | doc-consistency | — | — | repo-map-analyst |
-| `agente-testes` | doc-consistency | — | — | _(criar)_ |
-| `agente-arquitetura` | doc-consistency | — | — | _(criar)_ |
+| `agente-testes` | doc-consistency | — | — | agente-testes |
+| `agente-arquitetura` | doc-consistency | — | — | agente-arquitetura |
+| `agente-api-contratos` | doc-consistency | flutter-api | — | agente-api-contratos |
+| `agente-ci-cd` | doc-consistency | security-mobile | — | agente-ci-cd |
+| `agente-performance` | code-review-universal | performance-universal | — | — |
+| `flutter-revisor-codigo` | code-review-universal | flutter-code | flutter-analyze-lint | revisor-codigo |
+| `flutter-quality-gate` | doc-consistency | flutter-analyze-lint | — | quality-gate |
 | `flutter-ui-ux-pro` | ui-ux-pro | anti-ai-generic-ui | flutter-ui-standards | design-ui-ux-pro |
-| `flutter-state-arch` | flutter-state | flutter-code | flutter-perf | _(criar)_ |
+| `flutter-state-arch` | flutter-state | flutter-code | flutter-perf | flutter-state-arch |
 | `sync-data-guard` | offline-sync | sqlite-integrity | flutter-sqlite | — |
 
 ---
