@@ -1,0 +1,25 @@
+# Dados locais dos projetos catalogados — não versionar
+projetos/
+
+# Resultado bruto do scan — gerado automaticamente
+scan_results_full.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ambientes virtuais
+.venv/
+env/
+venv/
+
+# Sistemas operacionais
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.user
