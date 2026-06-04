@@ -83,6 +83,48 @@ Regras:
 
 ---
 
+## Instalacao Condicional por Projeto
+
+Agentes da biblioteca mestre nao devem ser instalados de forma fixa e igual para todo projeto. A selecao operacional deve variar por linguagem, stack, tipo de projeto, plataforma alvo, intencao do usuario e necessidade de seguranca/compliance.
+
+Antes de copiar agentes para `governance/agents/`, o bootstrap deve detectar ou perguntar o contexto e gerar configuracao explicita do projeto.
+
+| Item | Tipo | Condicao de criacao | Pergunta ao usuario | Variavel de configuracao | Destino | Observacao |
+|:---|:---|:---|:---|:---|:---|:---|
+| Base universal | Obrigatorio em instalacao de governanca | Pedido de instalacao/configuracao de governanca | N/A | N/A | `governance/agents/` | Nao substitui especialistas. |
+| Orquestrador pai | Obrigatorio em instalacao de governanca | Projeto precisa coordenar agentes | N/A | N/A | `governance/agents/` | Coordena; nao edita estrutura. |
+| Documentacao/SDD | Obrigatorio quando houver governanca documental | Projeto precisa README, guias, SDD ou Spec Kit | N/A | N/A | `governance/agents/` | Mantem docs e especificacoes. |
+| Google Play | Opcional | Flutter/Android, AAB/APK, Play Console ou publicacao Android | Deseja ativar suporte Google Play/Publicacao Android? | `ENABLE_GOOGLE_PLAY_AGENT` | `governance/agents/` | Subordinado a `documentacao-requisitos`. |
+| Godot/GDScript | Opcional | Projeto de game com Godot confirmado | O jogo usa Godot/GDScript? | `ENABLE_GODOT_AGENT` | `governance/agents/` e `governance/skills/` | Usa `criador-games`; nao cria agente faz-tudo. |
+| Raspagem publica | Opcional | Pesquisa, benchmarking ou metadata publica permitida | A coleta sera apenas em fontes publicas e permitidas? | `ENABLE_SCRAPING_AGENT` | `governance/agents/` | Bloqueia login, captcha, paywall e violacao de termos. |
+| Seguranca | Transversal | App, API, DB, auth, release ou dados sensiveis | O projeto exige revisao de seguranca? | `ENABLE_SECURITY_AGENTS` | `governance/agents/` | Reforca `seguranca-conformidade`. |
+| LGPD | Transversal | Dados pessoais de usuarios no Brasil | O projeto trata dados pessoais sujeitos a LGPD? | `ENABLE_LGPD_AGENT` | `governance/agents/` | Pode exigir privacidade como frente explicita. |
+
+### Variaveis de configuracao
+
+| Variavel | Uso |
+|:---|:---|
+| `PROJECT_TYPE` | Define se o projeto e app, web, API, game, conteudo, biblioteca ou misto. |
+| `PROJECT_STACK` | Define stack dominante: Flutter, Android, Godot, Node, Python, Java ou mista. |
+| `PROJECT_LANGUAGE` | Define linguagem dominante: Dart, Kotlin, GDScript, JavaScript, TypeScript, Python, Java ou mista. |
+| `PROJECT_TARGET_PLATFORM` | Define alvo: Android, iOS, web, desktop, backend, console ou misto. |
+| `ENABLE_GOOGLE_PLAY_AGENT` | Ativa Google Play somente quando a plataforma justificar. |
+| `ENABLE_GODOT_AGENT` | Ativa linha tecnica Godot somente em projeto de game Godot. |
+| `ENABLE_SCRAPING_AGENT` | Ativa coleta publica limitada somente com compliance definido. |
+| `ENABLE_SECURITY_AGENTS` | Ativa seguranca transversal quando houver superficie tecnica relevante. |
+| `ENABLE_LGPD_AGENT` | Ativa privacidade/LGPD quando houver dados pessoais. |
+
+### Regras de opcionais
+
+- Google Play nao e universal; so existe quando o projeto justificar publicacao Android.
+- Godot nao e universal; so existe quando o projeto for game e o usuario confirmar Godot/GDScript.
+- Games continuam separados por responsabilidade: estrutura, narrativa, criativo, monetizacao e tecnico do motor quando aplicavel.
+- Raspagem e apenas coleta publica permitida; nao pode burlar login, captcha, paywall, controles tecnicos ou termos de uso.
+- Seguranca e LGPD sao linhas transversais; devem cobrir app, repositorio, API, banco, exposicao indevida e privacidade.
+- Criar novo agente opcional ou subdivisao estrutural exige `/guard`.
+
+---
+
 ## Estrutura de Pastas
 
 | Caminho | Função | Pode conter | Não pode conter |

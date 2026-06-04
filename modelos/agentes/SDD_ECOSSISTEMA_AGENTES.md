@@ -3,9 +3,9 @@
 | Campo | Valor |
 |:---|:---|
 | **Tipo do projeto** | `GOVERNANCA_DE_IA` |
-| **Versao do documento** | `1.0.0` |
+| **Versao do documento** | `1.1.0` |
 | **Status** | `EM ANALISE` |
-| **Data** | `2026-06-03` |
+| **Data** | `2026-06-04` |
 | **Autores** | `spec-agent` |
 | **Revisores** | `agente-configuracao-governanca`, `documentacao-requisitos`, `quality-gate`, humano responsavel |
 
@@ -430,9 +430,105 @@ O README deve manter secoes fixas para `Modelo de Autoridade`, `Tags de execucao
 
 ---
 
-## 10. Seguranca e Invariantes
+## 10. Instalacao Condicional e Agentes Opcionais
 
-### 10.1 Invariantes obrigatorios
+### 10.1 Diagnostico atual
+
+O ecossistema ja separa `modelos/`, `governance/` e `triagem/`, mas a instalacao operacional precisa deixar de ser fixa. A regra normativa passa a ser selecao contextual: linguagem, stack, tipo de projeto, plataforma alvo, intencao do usuario e risco de seguranca/compliance definem quais agentes, prompts e skills sao copiados para um projeto.
+
+Conflitos a evitar:
+
+- Instalar Google Play como padrao universal.
+- Instalar Godot como padrao universal.
+- Criar agente de game monolitico.
+- Permitir raspagem sem limites legais.
+- Reduzir seguranca e LGPD a checklist superficial.
+- Transformar `triagem/` em catalogo oficial.
+
+### 10.2 Fluxo de instalacao condicional
+
+```mermaid
+flowchart TD
+    START["Pedido de instalacao/configuracao"] --> READ["Ler arquivos citados e sinais do repo"]
+    READ --> DETECT["Detectar tipo, stack, linguagem e plataforma"]
+    DETECT --> ASK{"Evidencia suficiente?"}
+    ASK -->|nao| QUESTIONS["Perguntar apenas o necessario"]
+    ASK -->|sim| CONFIG["Gerar configuracao do projeto"]
+    QUESTIONS --> CONFIG
+    CONFIG --> SELECT["Selecionar agentes, prompts e skills minimos"]
+    SELECT --> OPTIONAL{"Opcionais habilitados?"}
+    OPTIONAL --> GP["Google Play se Android/Flutter e confirmado"]
+    OPTIONAL --> GODOT["Godot se game Godot confirmado"]
+    OPTIONAL --> SCRAPE["Raspagem se fonte publica permitida"]
+    OPTIONAL --> SEC["Seguranca/LGPD se risco exigir"]
+    GP --> COPY["Copiar somente selecionados para governance/"]
+    GODOT --> COPY
+    SCRAPE --> COPY
+    SEC --> COPY
+    OPTIONAL --> COPY
+    COPY --> DOC["Documentar instalados e nao instalados"]
+```
+
+### 10.3 Variaveis de configuracao
+
+| Variavel | Valores esperados | Uso |
+|:---|:---|:---|
+| `PROJECT_TYPE` | `app`, `web`, `api`, `game`, `content`, `library`, `mixed` | Define dominio principal. |
+| `PROJECT_STACK` | `flutter`, `android`, `godot`, `node`, `python`, `java`, `mixed`, `unknown` | Define stack dominante. |
+| `PROJECT_LANGUAGE` | `dart`, `kotlin`, `gdscript`, `javascript`, `typescript`, `python`, `java`, `mixed`, `unknown` | Define linguagem dominante. |
+| `PROJECT_TARGET_PLATFORM` | `android`, `ios`, `web`, `desktop`, `backend`, `console`, `mixed` | Define plataforma alvo. |
+| `ENABLE_GOOGLE_PLAY_AGENT` | `true` / `false` | Ativa suporte Google Play quando a plataforma justificar. |
+| `ENABLE_GODOT_AGENT` | `true` / `false` | Ativa linha tecnica Godot/GDScript para game Godot. |
+| `ENABLE_SCRAPING_AGENT` | `true` / `false` | Ativa coleta publica limitada e permitida. |
+| `ENABLE_SECURITY_AGENTS` | `true` / `false` | Ativa seguranca transversal. |
+| `ENABLE_LGPD_AGENT` | `true` / `false` | Ativa privacidade/LGPD quando houver dados pessoais. |
+
+### 10.4 Regras para agentes opcionais
+
+| Item | Tipo | Condicao de criacao | Pergunta ao usuario | Variavel | Destino | Observacao |
+|:---|:---|:---|:---|:---|:---|:---|
+| Google Play | Opcional | Flutter/Android, AAB/APK, Play Console ou publicacao Android | Deseja ativar suporte Google Play/Publicacao Android? | `ENABLE_GOOGLE_PLAY_AGENT` | `governance/agents/` | Subordinado a `documentacao-requisitos`; nao altera governanca. |
+| Godot/GDScript | Opcional | Projeto de game com Godot confirmado | O jogo usa Godot/GDScript? | `ENABLE_GODOT_AGENT` | `governance/agents/`, `governance/skills/` | `criador-games` coordena; especialistas mantem separacao. |
+| Raspagem publica | Opcional | Benchmarking, metadata publica ou pesquisa documental permitida | A coleta sera apenas em fontes publicas e permitidas? | `ENABLE_SCRAPING_AGENT` | `governance/agents/` | Proibe bypass de login, captcha, paywall e termos. |
+| Seguranca | Transversal | App, API, DB, auth, release, secrets ou dados sensiveis | O projeto exige revisao de seguranca? | `ENABLE_SECURITY_AGENTS` | `governance/agents/` | `seguranca-conformidade` e referencia principal. |
+| LGPD | Transversal | Dados pessoais de usuarios no Brasil | O projeto trata dados pessoais sujeitos a LGPD? | `ENABLE_LGPD_AGENT` | `governance/agents/` | Pode exigir privacidade como subfrente documentada. |
+
+### 10.5 Godot e games
+
+Godot deve ser tratado como linha opcional de tecnologia dentro de games, nao como substituto da arquitetura de games.
+
+| Responsabilidade | Agente |
+|:---|:---|
+| Orquestracao e GDD | `criador-games` |
+| Estrutura, mecanicas e loop | `estrutura-games` |
+| Historia, lore e dialogos | `narrativa-games` |
+| HUD, UX e direcao criativa | `criativo-games` |
+| Economia, monetizacao e retencao | `monetizacao-games` |
+| Motor Godot/GDScript | Especialista tecnico futuro, somente se criado via `/guard` |
+
+Referencias como `godot-gdscript-patterns` podem orientar uma adaptacao futura, mas nao devem ser importadas diretamente de `triagem/` ou `Utils/`.
+
+### 10.6 Seguranca e LGPD
+
+`seguranca-conformidade` permanece como agente de referencia para seguranca e compliance. Quando a demanda exigir profundidade, a arquitetura deve documentar subareas antes de criar novos agentes:
+
+| Subarea | Escopo |
+|:---|:---|
+| Seguranca mobile/app | Permissoes, armazenamento local, secrets, logs, auth, release e superficie Android/iOS. |
+| Seguranca backend/API/DB | Autenticacao, autorizacao, endpoints, banco, exposicao indevida, rate limits e integracoes. |
+| Privacidade e LGPD | Dados pessoais, finalidade, consentimento, retencao, compartilhamento e direitos do titular. |
+
+Nova subdivisao estrutural exige recorrencia, escopo duravel e validacao do guardiao.
+
+### 10.7 Triagem
+
+`triagem/` permanece area de auditoria e curadoria. Ela nao instala agentes, nao altera governanca e nao vira catalogo oficial. Todas as observacoes devem ficar em `triagem/notas_master.md`; nao deve haver `notas.md` locais por agente ou pasta. `Utils/` permanece fora do Git.
+
+---
+
+## 11. Seguranca e Invariantes
+
+### 11.1 Invariantes obrigatorios
 
 - O orquestrador nunca altera agentes, prompts, skills, permissoes ou configs.
 - O orquestrador nunca aciona o guardiao automaticamente.
@@ -447,13 +543,13 @@ O README deve manter secoes fixas para `Modelo de Autoridade`, `Tags de execucao
 - Skills genericas demais devem ser restringidas ou renomeadas.
 - Documentacao solta deve ser alinhada aos templates oficiais.
 
-### 10.2 Protecao contra perda da configuracao padrao
+### 11.2 Protecao contra perda da configuracao padrao
 
 - Mudancas estruturais devem registrar agente afetado, impacto cruzado, tags, permissoes e README.
 - Arquivos em `modelos/` sao modelos universais; copias de projeto ficam em `governance/agents/`.
 - Remocoes exigem justificativa e substituto quando houver agente ativo equivalente.
 
-### 10.3 Bloqueios
+### 11.3 Bloqueios
 
 Bloquear quando:
 - um agente nao declara skill ou prompt;
@@ -468,7 +564,7 @@ Bloquear quando:
 
 ---
 
-## 11. Criterios de Qualidade
+## 12. Criterios de Qualidade
 
 | Criterio | Regra de aceitacao |
 |:---|:---|
@@ -482,9 +578,9 @@ Bloquear quando:
 
 ---
 
-## 12. Manutencao e Evolucao
+## 13. Manutencao e Evolucao
 
-### 12.1 Rotina de revisao
+### 13.1 Rotina de revisao
 
 | Frequencia | Acao | Dono |
 |:---|:---|:---|
@@ -493,7 +589,7 @@ Bloquear quando:
 | A cada atualizacao documental | Validar template e links | `documentacao-requisitos` e `validador-documentacao` |
 | Periodicamente | Procurar redundancia entre agentes e skills genericas | `agente-configuracao-governanca` |
 
-### 12.2 Roadmap
+### 13.2 Roadmap
 
 | Item | Motivo | Prioridade |
 |:---|:---|:---:|
@@ -505,7 +601,7 @@ Bloquear quando:
 
 ---
 
-## 13. Resumo das Responsabilidades
+## 14. Resumo das Responsabilidades
 
 | Grupo | Agentes | Responsabilidade consolidada |
 |:---|:---|:---|
@@ -521,9 +617,9 @@ Bloquear quando:
 
 ---
 
-## 14. Lista Final de Permissoes e Proibicoes
+## 15. Lista Final de Permissoes e Proibicoes
 
-### 14.1 Permissoes
+### 15.1 Permissoes
 
 - `agente-configuracao-governanca`: editar governanca estrutural e validar agentes.
 - `orquestrador-agentes`: coordenar, classificar, executar demandas simples, criar plan/tasks para demandas complexas, delegar e consolidar.
@@ -532,7 +628,7 @@ Bloquear quando:
 - `spec-agent`: criar SDD master, SDD derivado e artefatos Spec Kit.
 - Especialistas: editar apenas artefatos do proprio dominio quando a tarefa autorizar.
 
-### 14.2 Proibicoes
+### 15.2 Proibicoes
 
 - Orquestrador nao edita configuracao.
 - Orquestrador nao aciona o guardiao automaticamente.
@@ -548,7 +644,7 @@ Bloquear quando:
 
 ---
 
-## 15. Lista Final de Tags Padronizadas
+## 16. Lista Final de Tags Padronizadas
 
 | Tag | Padrao |
 |:---|:---|
@@ -559,7 +655,7 @@ Bloquear quando:
 
 ---
 
-## 16. Lista Final de Skills Padronizadas
+## 17. Lista Final de Skills Padronizadas
 
 As skills padronizadas devem permanecer registradas em `modelos/skills/README.md` e vinculadas em agentes por caminho relativo.
 
@@ -579,7 +675,7 @@ As skills padronizadas devem permanecer registradas em `modelos/skills/README.md
 
 ---
 
-## 17. Apendices
+## 18. Apendices
 
 ### A. Checklist pre-mudanca estrutural
 
