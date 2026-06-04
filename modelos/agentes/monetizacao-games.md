@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |:---|:---|
-| **Versão** | `1.0.0` |
-| **Camada** | `Universal` |
-| **Herda de** | `agente-arquitetura` |
+| **Versão** | `2.0.0` |
+| **Camada** | `Funcional` |
+| **Herda de** | `agente-base-universal` |
 | **Status** | `active` |
 | **Domínio** | `Games` |
-| **Atualizado em** | `2026-06-02` |
+| **Atualizado em** | `2026-06-03` |
 
 ---
 
@@ -35,6 +35,9 @@
 - **Os Limites (fora de escopo) cobrem:**
   - Programar a integração com APIs de faturamento (SDKs da Play Store ou App Store).
   - Modelar visualmente as artes ou skins dos itens virtuais.
+  - Coordenar a família de agentes de games; essa função pertence ao `criador-games`.
+
+**Delegado por:** `criador-games`.
 
 ---
 
@@ -53,6 +56,7 @@
 
 - skill: `../skills/game-monetization-strategy.md` — [Estratégias de monetização e anúncios]
 - skill: `../skills/game-mechanics-balance.md` — [Balanceamento matemático de regras e economia]
+- skill: `../skills/scope-control.md` — [Controle de escopo com mecânicas e publicação]
 
 ---
 

@@ -37,5 +37,5 @@ Definir e revisar a identidade visual, direção de arte, interface de usuário 
 
 ## Relação com outros agentes
 
-- Herda de `agente-ui-ux-universal` adaptando para jogos.
+- Herda de `agente-base-universal` e aplica critérios de UI/UX ao domínio de games.
 - Baseia-se no tom e universo fornecido pelo `narrativa-games`.

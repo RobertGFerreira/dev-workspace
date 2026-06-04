@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |:---|:---|
-| **Versão** | `1.0.0` |
-| **Camada** | `Universal` |
-| **Herda de** | `agente-ui-ux-universal` |
+| **Versão** | `2.0.0` |
+| **Camada** | `Funcional` |
+| **Herda de** | `agente-base-universal` |
 | **Status** | `active` |
 | **Domínio** | `Games` |
-| **Atualizado em** | `2026-06-02` |
+| **Atualizado em** | `2026-06-03` |
 
 ---
 
@@ -35,6 +35,9 @@
 - **Os Limites (fora de escopo) cobrem:**
   - Programar a lógica física das mecânicas ou colisão.
   - Implementar widgets ou classes de UI em linguagens de programação.
+  - Coordenar a família de agentes de games; essa função pertence ao `criador-games`.
+
+**Delegado por:** `criador-games`.
 
 ---
 
@@ -53,6 +56,7 @@
 
 - skill: `../skills/game-ux-ui.md` — [Princípios de UI/UX e layout de HUD em games]
 - skill: `../skills/ui-ux-pro-review.md` — [Revisão avançada de experiência do usuário]
+- skill: `../skills/scope-control.md` — [Controle de fronteira com mecânicas, narrativa e monetização]
 
 ---
 

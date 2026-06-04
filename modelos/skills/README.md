@@ -113,6 +113,7 @@ Conhecimento especializado de um domínio de negócio — regras, terminologia, 
 | `forms-validation-review.md` | Revisão de validação de formulários — campos obrigatórios, feedback, UX |
 | `flutter-navigation-review.md` | Revisão de fluxos de navegação — rotas, deeplinks, estado de navegação |
 | `navigation-flow-review.md` | Auditoria de fluxo completo de navegação entre telas |
+| `scope-control.md` | Controle de escopo, autoridade e fronteiras entre agentes |
 
 ### 🔗 Integração
 | Arquivo | Descrição |
@@ -146,6 +147,16 @@ Conhecimento especializado de um domínio de negócio — regras, terminologia, 
 | `game-ux-ui.md` | Princípios de UI/UX aplicados a games, layouts de HUD e feedback |
 | `game-monetization-strategy.md` | Economia in-game, passes, anúncios e compras integradas |
 | `game-release-readiness.md` | Validação de builds de jogos, assets e readiness para publicação |
+
+### Conteúdo Editorial
+| Arquivo | Descrição |
+|---|---|
+| `content-orchestration.md` | Orquestração entre roteiro, documentação, estratégia, revisão e publicação |
+| `editorial-structure.md` | Estruturação editorial de peças, documentos, roteiros e publicações |
+| `narrative-structure.md` | Estrutura narrativa para roteiros, vídeos, aulas e storytelling |
+| `audience-targeting.md` | Definição de público, canal, tom e intenção de comunicação |
+| `publication-readiness.md` | Prontidão editorial para publicação em canais digitais ou docs versionadas |
+| `quality-review.md` | Revisão final de qualidade, clareza, consistência e aderência ao objetivo |
 
 ### 📢 Marketing de Sistemas
 | Arquivo | Descrição |

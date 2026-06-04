@@ -14,8 +14,8 @@
 │ CAMADA 2 — Especializado por tecnologia                      │
 │ Adiciona regras de stack sem contradizer a Camada 1          │
 ├──────────────────────────────────────────────────────────────┤
-│ CAMADA 3 — Especializado por domínio de negócio              │
-│ Adiciona contexto de negócio sobre as camadas anteriores     │
+│ CAMADA 3 — Funcional / domínio de negócio                    │
+│ Orquestradores e especialistas por função ou domínio         │
 ├──────────────────────────────────────────────────────────────┤
 │ CAMADA 4 — Específico de projeto                             │
 │ Cópias em governance/agents/ do repositório de destino       │
@@ -31,12 +31,82 @@
 
 ---
 
+## Modelo de Autoridade
+
+| Papel | Agente oficial | O que faz | O que não faz | Quem valida |
+|:---|:---|:---|:---|:---|
+| Orquestrador pai | `orquestrador-agentes` | Classifica demanda, executa pequenas tarefas, cria `plan`/`tasks` para demandas maiores e faz handoff | Não edita agentes, prompts, regras, permissões ou configurações; não chama o guardião automaticamente | `quality-gate` e agentes acionados |
+| Guardião de agentes | `agente-configuracao-governanca` | Cria, altera, remove, valida e reorganiza agentes e governança estrutural | Não executa implementação fora de governança; só atua com `/guard` explícito | Ele próprio + revisão documental quando aplicável |
+| Documentação | `documentacao-requisitos` | Mantém README, guias, SDD derivado, Spec Kit operacional, `/limpadoc` e documentação Google Play | Não altera estrutura de agentes sem `/guard` explícito | `validador-documentacao` |
+| Especialista Google Play | `google-play-support` | Apoia a frente documental em Play Console, store listing, políticas Android, assets e readiness de publicação | Não coordena documentação, não altera governança e não substitui o guardião | `documentacao-requisitos` e `quality-gate` quando houver validação técnica |
+| SDD / Spec Kit | `spec-agent` | Mantém SDD master, SDD derivado quando necessário e validações Spec Kit | Não altera agentes, prompts, permissões ou hierarquia | `quality-gate` e guardião somente quando acionado por `/guard` |
+| Orquestrador de games | `criador-games` | Coordena especialistas de mecânicas, narrativa, criativo e monetização | Não substitui especialistas de games | `quality-gate` |
+| Orquestrador de conteúdo | `criador-conteudo` | Coordena roteiro, documentação, estratégia, revisão e publicação | Não substitui especialistas de conteúdo | `revisor-conteudo` |
+
+### Tags de execução
+
+| Tag | Agente responsável | Escopo | Limite de autoridade |
+|:---|:---|:---|:---|
+| `/bora` | `orquestrador-agentes` | Executar: direto se simples; com `plan`/`tasks` se complexo | Não edita governança estrutural |
+| `/limpadoc` | `documentacao-requisitos` | Consolidar pendências lendo `governance/plans/` e `governance/tasks/` | Não arquiva automaticamente e não edita governança |
+| `/sdd` | `spec-agent` | Criar ou revisar SDD master ou SDD derivado de plano | Não altera agentes sem `/guard` explícito |
+| `/guard` | `agente-configuracao-governanca` | Mudanças estruturais em agentes e governança | Só atua por pedido explícito do usuário |
+
+### Critério mínimo de definição de agente
+
+Toda definição de agente deve declarar:
+
+- O que faz e o que não faz.
+- Quais arquivos pode alterar e quais não pode alterar.
+- Quais tags reconhece.
+- Quem valida suas mudanças.
+
+---
+
+## Padrão de Plan, Tasks e SDD
+
+| Artefato | Local único | Nome padrão | Dono operacional |
+|:---|:---|:---|:---|
+| Plan | `governance/plans/` | `YYYYMMDD-slug.plan.md` | `orquestrador-agentes` |
+| Tasks | `governance/tasks/` | `YYYYMMDD-slug.tasks.md` | `orquestrador-agentes` |
+| SDD master | `modelos/agentes/SDD_ECOSSISTEMA_AGENTES.md` | Fixo | `spec-agent` |
+| SDD derivado | `governance/plans/` | `YYYYMMDD-slug.sdd.md` | `documentacao-requisitos` com validação do `spec-agent` |
+
+Regras:
+
+- Demandas simples não criam `plan` nem `tasks`.
+- Demandas complexas sempre usam os dois locais padronizados.
+- SDD derivado só existe para plano complexo e nunca substitui o SDD master.
+- `/limpadoc` lê plans e tasks, identifica concluído/pendente, não arquiva automaticamente e gera documentação consolidada apenas com pendências.
+- Documentação operacional de Google Play fica sob coordenação de `documentacao-requisitos`, com apoio especializado de `google-play-support`; regras estruturais de agentes continuam exclusivas do guardião.
+- `google-play-support` pode usar terminal dentro do escopo da tarefa para validar evidências práticas de release, como manifest, Gradle, assets, AAB/APK e estrutura Android.
+
+---
+
+## Estrutura de Pastas
+
+| Caminho | Função | Pode conter | Não pode conter |
+|:---|:---|:---|:---|
+| `modelos/agentes/` | Biblioteca mestre de agentes reutilizáveis | Agentes universais, tecnológicos, funcionais, SDD master e documentação da biblioteca | Configuração específica de projeto ou cópias adaptadas |
+| `modelos/skills/` | Biblioteca mestre de skills | Skills versionadas e reutilizáveis | Regras privadas de projeto |
+| `modelos/prompts/` | Biblioteca mestre de prompts | Prompts vinculados a agentes | Prompts específicos de projeto sem generalização |
+| `governance/agents/` | Camada de projeto | Cópias adaptadas de agentes para um repositório destino | Modelos universais originais |
+| `governance/plans/` | Planos e SDDs derivados | `YYYYMMDD-slug.plan.md` e `YYYYMMDD-slug.sdd.md` | Tasks soltas ou documentos sem vínculo com plano |
+| `governance/tasks/` | Tarefas derivadas de planos | `YYYYMMDD-slug.tasks.md` | Plans, SDD master ou agentes |
+| `modelos/agentes/SDD_ECOSSISTEMA_AGENTES.md` | SDD master do ecossistema | Arquitetura normativa dos agentes | SDD derivado de plano |
+| Documentação operacional do projeto | Guias e evidências do projeto destino | README, guias, checklists, evidências de publicação | Governança estrutural de agentes |
+
+Regra: conteúdo específico de projeto não deve ser gravado em `modelos/`; deve ir para `governance/` ou para a documentação operacional do repositório destino.
+
+---
+
 ## Inventário de Agentes
 
 ### Camada 1 — Universais
 
 | Agente | Propósito | Skills vinculadas | Prompt vinculado | Status |
 |:---|:---|:---|:---|:---:|
+| `agente-base-universal` | Base universal herdável para escopo, limites e governança mínima | `scope-control`, `documentation-consistency-review` | `agente-base-universal` | `active` |
 | `orquestrador-agentes` | Pipeline central de triagem e delegação | `documentation-consistency-review` | `orquestrador-agentes` | `active` |
 | `revisor-codigo` | Revisão de código — qualidade, segurança, padrões | `documentation-consistency-review`, `security-mobile-review` | `revisor-codigo` | `active` |
 | `quality-gate` | Verificação transversal final antes de entrega | `documentation-consistency-review` | `quality-gate` | `active` |
@@ -47,17 +117,12 @@
 | `seguranca-conformidade` | Segurança, privacidade e conformidade regulatória | `security-mobile-review`, `forms-validation-review`, `flutter-api-integration` | `seguranca-conformidade` | `active` |
 | `repo-map-analyst` | Mapeamento de estrutura de repositório | `documentation-consistency-review` | `repo-map-analyst` | `active` |
 | `bootstrap-governanca` | Inicialização de governança (Day-0) | `documentation-consistency-review` | `bootstrap-governanca` | `active` |
-| `agente-configuracao-governanca` | Edição contínua de arquivos de governança | `documentation-consistency-review` | `bootstrap-governanca` | `active` |
+| `agente-configuracao-governanca` | Guardião oficial de agentes e governança estrutural | `documentation-consistency-review` | `bootstrap-governanca` | `active` |
 | `agente-testes` | Estratégia de testes, cobertura e critérios de aceite | `documentation-consistency-review` | `agente-testes` | `active` |
 | `agente-arquitetura` | ADRs, proteção de fronteiras e dívida técnica | `documentation-consistency-review` | `agente-arquitetura` | `active` |
 | `agente-api-contratos` | Definição, versionamento e conformidade de APIs | `documentation-consistency-review`, `flutter-api-integration` | `agente-api-contratos` | `active` |
 | `agente-ci-cd` | Pipeline de integração e entrega contínua (CI/CD) | `documentation-consistency-review`, `security-mobile-review` | `agente-ci-cd` | `active` |
 | `agente-performance` | Otimização de performance, consumo de recursos e latência | `code-review-universal`, `performance-universal` | — | `active` |
-| `criador-games` | Orquestração e diretor criativo de games | `game-loop-design`, `game-release-readiness` | `criador-games` | `active` |
-| `estrutura-games` | Balanceamento de mecânicas e progresso de jogo | `game-structure-planning`, `game-loop-design`, `game-mechanics-balance` | `estrutura-games` | `active` |
-| `narrativa-games` | Enredo, lore de mundo, diálogos e ramificações | `game-narrative-design` | `narrativa-games` | `active` |
-| `criativo-games` | Identidade visual, HUD, menus e UX de games | `game-ux-ui`, `ui-ux-pro-review` | `criativo-games` | `active` |
-| `monetizacao-games` | Economia in-game, passes, anúncios e precificação | `game-monetization-strategy`, `game-mechanics-balance` | `monetizacao-games` | `active` |
 | `marketing-sistemas` | Posicionamento, copies de conversão e lançamentos | `product-positioning`, `audience-segmentation`, `value-proposition-writing` | `marketing-sistemas` | `active` |
 | `validador-documentacao` | Conformidade e lints markdown de templates | `documentation-consistency`, `template-adherence`, `structure-review`, `markdown-quality`, `placeholder-governance` | `validador-documentacao` | `active` |
 | `distribuidor-aplicativos` | Preparação, chaves de assinatura e readiness de release | `release-readiness`, `asset-compliance`, `privacy-disclosure-review` | — | `active` |
@@ -69,10 +134,26 @@
 |:---|:---|:---|:---|:---:|
 | `flutter-revisor-codigo` | Revisão de código Dart/Flutter sênior | `revisor-codigo` | `code-review-universal`, `flutter-code-review`, `documentation-consistency-review`, `security-mobile-review`, `flutter-analyze-lint` | `active` |
 | `flutter-quality-gate` | Gate final de qualidade e análise estática Flutter | `quality-gate` | `documentation-consistency-review`, `flutter-analyze-lint` | `active` |
-| `flutter-ui-ux-pro` | UI/UX em Flutter — responsividade, tema, acessibilidade | `(agente-ui-ux-universal)` | `ui-ux-pro-review`, `anti-ai-generic-ui`, `flutter-ui-standards` | `active` |
+| `flutter-ui-ux-pro` | UI/UX em Flutter — responsividade, tema, acessibilidade | `agente-base-universal` | `ui-ux-pro-review`, `anti-ai-generic-ui`, `flutter-ui-standards` | `active` |
 | `flutter-state-arch` | Arquitetura de estado Flutter — GetX, Riverpod, BLoC, Provider | `agente-arquitetura` | `flutter-state-review`, `flutter-code-review`, `flutter-performance-guard` | `active` |
 | `sync-data-guard` | Sincronização offline/online e integridade SQLite | `guardiao-fluxo` | `offline-sync-review`, `sqlite-integrity-review`, `flutter-sqlite-review` | `active` |
-| `google-play-support` | Suporte à publicação e políticas do Google Play Console | `distribuidor-aplicativos` | `play-console-checklist`, `store-listing-optimization`, `android-policy-review`, `asset-compliance`, `release-readiness`, `privacy-disclosure-review` | `active` |
+| `google-play-support` | Especialista técnico-documental de Google Play subordinado à frente documental | `distribuidor-aplicativos` | `play-console-checklist`, `store-listing-optimization`, `android-policy-review`, `asset-compliance`, `release-readiness`, `privacy-disclosure-review` | `active` |
+
+### Camada 3 — Funcionais / Domínio
+
+| Agente | Propósito | Herda de | Delegado por | Skills vinculadas | Prompt | Status |
+|:---|:---|:---|:---|:---|:---|:---:|
+| `criador-games` | Orquestrador de games e consolidador do GDD | `orquestrador-agentes` | `orquestrador-agentes` | `game-loop-design`, `game-structure-planning`, `game-release-readiness`, `scope-control` | `criador-games` | `active` |
+| `estrutura-games` | Mecânicas, core loop, progressão e balanceamento | `agente-arquitetura` | `criador-games` | `game-structure-planning`, `game-loop-design`, `game-mechanics-balance`, `scope-control` | `estrutura-games` | `active` |
+| `narrativa-games` | História, lore, personagens, diálogos e ramificações | `documentacao-requisitos` | `criador-games` | `game-narrative-design`, `narrative-structure`, `documentation-consistency-review` | `narrativa-games` | `active` |
+| `criativo-games` | HUD, menus, UX, direção visual e feedback sensorial | `agente-base-universal` | `criador-games` | `game-ux-ui`, `ui-ux-pro-review`, `scope-control` | `criativo-games` | `active` |
+| `monetizacao-games` | Economia, monetização, retenção e anúncios | `agente-base-universal` | `criador-games` | `game-monetization-strategy`, `game-mechanics-balance`, `scope-control` | `monetizacao-games` | `active` |
+| `criador-conteudo` | Orquestrador de conteúdo e consolidador editorial | `orquestrador-agentes` | `orquestrador-agentes` | `content-orchestration`, `scope-control`, `quality-review`, `documentation-consistency` | `criador-conteudo` | `active` |
+| `roteirista-conteudo` | Roteiros, narrativa, cenas, vídeos e storytelling | `documentacao-requisitos` | `criador-conteudo` | `narrative-structure`, `editorial-structure`, `audience-targeting` | `roteirista-conteudo` | `active` |
+| `documentacao-conteudo` | README, guias, manuais e artefatos editoriais | `documentacao-requisitos` | `criador-conteudo` | `documentation-consistency`, `template-adherence`, `editorial-structure` | `documentacao-conteudo` | `active` |
+| `estrategista-conteudo` | Público, canal, pauta, tom, CTA e estratégia editorial | `marketing-sistemas` | `criador-conteudo` | `audience-targeting`, `editorial-structure`, `content-orchestration`, `scope-control` | `estrategista-conteudo` | `active` |
+| `revisor-conteudo` | Clareza, consistência, escopo e qualidade editorial | `validador-documentacao` | `criador-conteudo` | `quality-review`, `template-adherence`, `documentation-consistency`, `scope-control` | `revisor-conteudo` | `active` |
+| `publicacao-conteudo` | Readiness, metadados, links, CTA e checklist de canal | `documentacao-requisitos` | `criador-conteudo` | `publication-readiness`, `template-adherence`, `audience-targeting`, `quality-review` | `publicacao-conteudo` | `active` |
 
 ### Depreciados
 
@@ -96,7 +177,7 @@ Todo agente deve conter o seguinte bloco no início do arquivo:
 | Campo | Valor |
 |:---|:---|
 | **Versão** | `X.Y.Z` |
-| **Camada** | `Universal` / `Flutter` / `{Tecnologia}` / `Projeto` |
+| **Camada** | `Universal` / `{Tecnologia}` / `Funcional` / `Projeto` |
 | **Herda de** | `{agente-pai}` ou `—` |
 | **Status** | `active` / `draft` / `deprecated` / `archived` |
 | **Domínio** | `Geral` / `Flutter` / `Backend` / ... |
@@ -105,59 +186,56 @@ Todo agente deve conter o seguinte bloco no início do arquivo:
 
 ---
 
-## Fluxo de Orquestração
+## Fluxo Operacional Real
 
 ```mermaid
 flowchart TD
-    classDef universal fill:#1e40af,color:#fff,stroke:#1e3a8a
-    classDef flutter fill:#059669,color:#fff,stroke:#047857
-    classDef validator fill:#dc2626,color:#fff,stroke:#b91c1c
-    classDef analyst fill:#64748b,color:#fff,stroke:#475569
-    classDef io fill:#f8fafc,color:#1e293b,stroke:#94a3b8
+    classDef base fill:#1e40af,color:#fff,stroke:#1e3a8a
+    classDef domain fill:#059669,color:#fff,stroke:#047857
+    classDef specialist fill:#f8fafc,color:#1e293b,stroke:#94a3b8
+    classDef guard fill:#dc2626,color:#fff,stroke:#991b1b
+    classDef artifact fill:#fef3c7,color:#1f2937,stroke:#f59e0b
 
-    TRIGGER([🚀 Demanda]):::io
-    ENTREGA([✅ Entrega]):::io
-    LOOP([🔁 Revisão]):::io
+    USER["usuario"] --> ORQ["orquestrador-agentes\nclassifica demanda"]:::base
+    ORQ --> DECIDE{"SIMPLES?"}
+    DECIDE -->|sim| DIRECT["executa direto com /bora"]:::artifact
+    DECIDE -->|nao| PLAN["cria plan e tasks\nem locais unicos"]:::artifact
+    PLAN --> P1["governance/plans/YYYYMMDD-slug.plan.md"]:::artifact
+    PLAN --> T1["governance/tasks/YYYYMMDD-slug.tasks.md"]:::artifact
 
-    TRIGGER --> OR
+    DIRECT --> ROUTE["rotear por linha operacional"]:::base
+    PLAN --> ROUTE
 
-    subgraph ORQUESTRAÇÃO
-        OR["orquestrador"]:::universal
-    end
+    ROUTE --> GAMES["games\ncriador-games"]:::domain
+    ROUTE --> DOCS["documentacao\ndocumentacao-requisitos"]:::domain
+    ROUTE --> CONTENT["conteudo\ncriador-conteudo"]:::domain
+    ROUTE --> DEV["desenvolvimento\nespecialistas tecnicos"]:::domain
 
-    OR --> PL
-    OR --> ES
-    OR --> AN
+    GAMES --> GAME_STRUCT["estrutura-games"]:::specialist
+    GAMES --> GAME_NARR["narrativa-games"]:::specialist
+    GAMES --> GAME_CREATIVE["criativo-games"]:::specialist
+    GAMES --> GAME_MON["monetizacao-games"]:::specialist
 
-    subgraph PLANEJAMENTO
-        PL["spec-agent\ndocumentacao\nagente-arquitetura"]:::universal
-    end
+    DOCS --> LIMPADOC["/limpadoc\nconsolidar pendencias"]:::specialist
+    DOCS --> SDD_DER["SDD derivado e Spec Kit operacional"]:::specialist
+    DOCS --> GP["google-play-support\nPlay Console e publicacao"]:::specialist
+    GP --> GPT["terminal quando necessario\nvalidacao pratica"]:::artifact
 
-    subgraph EXECUÇÃO
-        ES["flutter-ui-ux-pro\nflutter-state-arch\nsync-data-guard\n(especialistas)"]:::flutter
-    end
+    CONTENT --> CONTENT_SCRIPT["roteirista-conteudo"]:::specialist
+    CONTENT --> CONTENT_DOC["documentacao-conteudo"]:::specialist
+    CONTENT --> CONTENT_STRAT["estrategista-conteudo"]:::specialist
+    CONTENT --> CONTENT_REVIEW["revisor-conteudo"]:::specialist
+    CONTENT --> CONTENT_PUB["publicacao-conteudo"]:::specialist
 
-    subgraph ANÁLISE
-        AN["repo-map\nideias-exploracao"]:::analyst
-    end
+    DEV --> REV["revisor-codigo"]:::specialist
+    DEV --> ARCH["agente-arquitetura"]:::specialist
+    DEV --> API["agente-api-contratos"]:::specialist
+    DEV --> FLUTTER["especialistas Flutter"]:::specialist
+    DEV --> QG["quality-gate"]:::specialist
 
-    PL --> RV
-    ES --> RV
-    AN -.-> OR
-
-    subgraph REVISÃO
-        RV["revisor-codigo\nagente-testes"]:::universal
-    end
-
-    RV --> VL
-
-    subgraph VALIDAÇÃO
-        VL{"quality-gate\ncommit-guardian\nguardiao-fluxo\nseguranca"}:::validator
-    end
-
-    VL -->|✅ Aprovado| ENTREGA
-    VL -->|❌ Reprovado| LOOP
-    LOOP --> OR
+    GUARD["agente-configuracao-governanca\nfora do fluxo automatico"]:::guard
+    USER -. "/guard explicito" .-> GUARD
+    GUARD -. "se mudar estrutura" .-> README["modelos/agentes/README.md"]:::artifact
 ```
 
 ---
@@ -208,7 +286,8 @@ flowchart TD
 
 | Agente | Skill 1 | Skill 2 | Skill 3 | Prompt |
 |:---|:---|:---|:---|:---|
-| `orquestrador-agentes` | doc-consistency | — | — | orquestrador-agentes |
+| `agente-base-universal` | scope-control | doc-consistency-review | — | agente-base-universal |
+| `orquestrador-agentes` | doc-consistency | scope-control | — | orquestrador-agentes |
 | `revisor-codigo` | doc-consistency | security-mobile | code-review-universal | revisor-codigo |
 | `quality-gate` | doc-consistency | — | — | quality-gate |
 | `spec-agent` | doc-consistency | anti-ai-generic-ui | — | spec-agent |
@@ -222,11 +301,17 @@ flowchart TD
 | `agente-api-contratos` | doc-consistency | flutter-api | — | agente-api-contratos |
 | `agente-ci-cd` | doc-consistency | security-mobile | — | agente-ci-cd |
 | `agente-performance` | code-review-universal | performance-universal | — | — |
-| `criador-games` | game-loop-design | game-release-readiness | — | criador-games |
+| `criador-games` | game-loop-design | game-structure-planning | game-release-readiness | criador-games |
 | `estrutura-games` | game-structure-planning | game-loop-design | game-mechanics-balance | estrutura-games |
-| `narrativa-games` | game-narrative-design | doc-consistency | — | narrativa-games |
-| `criativo-games` | game-ux-ui | ui-ux-pro | — | criativo-games |
-| `monetizacao-games` | game-monetization-strategy | game-mechanics-balance | — | monetizacao-games |
+| `narrativa-games` | game-narrative-design | narrative-structure | doc-consistency | narrativa-games |
+| `criativo-games` | game-ux-ui | ui-ux-pro | scope-control | criativo-games |
+| `monetizacao-games` | game-monetization-strategy | game-mechanics-balance | scope-control | monetizacao-games |
+| `criador-conteudo` | content-orchestration | scope-control | quality-review | criador-conteudo |
+| `roteirista-conteudo` | narrative-structure | editorial-structure | audience-targeting | roteirista-conteudo |
+| `documentacao-conteudo` | documentation-consistency | template-adherence | editorial-structure | documentacao-conteudo |
+| `estrategista-conteudo` | audience-targeting | editorial-structure | content-orchestration | estrategista-conteudo |
+| `revisor-conteudo` | quality-review | template-adherence | scope-control | revisor-conteudo |
+| `publicacao-conteudo` | publication-readiness | template-adherence | audience-targeting | publicacao-conteudo |
 | `marketing-sistemas` | product-positioning | audience-segmentation | value-proposition-writing | marketing-sistemas |
 | `validador-documentacao` | documentation-consistency | template-adherence | structure-review | validador-documentacao |
 | `distribuidor-aplicativos` | release-readiness | asset-compliance | privacy-disclosure-review | — |
@@ -247,7 +332,7 @@ flowchart TD
 4. **Copie para o projeto** — coloque em `governance/agents/` do repositório destino.
 5. **Preencha o contexto** — substitua `{{PLACEHOLDERS}}` pelas especificidades do projeto.
 6. **Vincule prompts e skills** — atualize as seções de skills e prompts com os caminhos corretos.
-7. **Não modifique o original** em `modelos/agentes/` — edite apenas a cópia no projeto.
+7. **Não modifique o original** em `modelos/agentes/` durante uso comum — mudanças estruturais nos modelos só podem ser feitas pelo `agente-configuracao-governanca`.
 
 ### Agentes mais reutilizáveis (mínima adaptação)
 

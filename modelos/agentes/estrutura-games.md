@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |:---|:---|
-| **Versão** | `1.0.0` |
-| **Camada** | `Universal` |
+| **Versão** | `2.0.0` |
+| **Camada** | `Funcional` |
 | **Herda de** | `agente-arquitetura` |
 | **Status** | `active` |
 | **Domínio** | `Games` |
-| **Atualizado em** | `2026-06-02` |
+| **Atualizado em** | `2026-06-03` |
 
 ---
 
@@ -35,6 +35,9 @@
 - **Os Limites (fora de escopo) cobrem:**
   - Redigir roteiros e diálogos criativos.
   - Desenhar sprites ou modelos 3D dos componentes do HUD/cenário.
+  - Coordenar a família de agentes de games; essa função pertence ao `criador-games`.
+
+**Delegado por:** `criador-games`.
 
 ---
 
@@ -54,6 +57,7 @@
 - skill: `../skills/game-structure-planning.md` — [Planejamento de fluxos e cenas de jogos]
 - skill: `../skills/game-loop-design.md` — [Design de core loops e metagame]
 - skill: `../skills/game-mechanics-balance.md` — [Cálculo e balanceamento de atributos]
+- skill: `../skills/scope-control.md` — [Controle de escopo com demais agentes de games]
 
 ---
 

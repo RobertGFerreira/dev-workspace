@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |:---|:---|
-| **Versão** | `1.0.0` |
-| **Camada** | `Universal` |
+| **Versão** | `2.0.0` |
+| **Camada** | `Funcional` |
 | **Herda de** | `documentacao-requisitos` |
 | **Status** | `active` |
 | **Domínio** | `Games` |
-| **Atualizado em** | `2026-06-02` |
+| **Atualizado em** | `2026-06-03` |
 
 ---
 
@@ -35,6 +35,9 @@
 - **Os Limites (fora de escopo) cobrem:**
   - Definir lógicas matemáticas de dano ou velocidade de combate.
   - Implementar interfaces de inventário ou layouts de HUD.
+  - Coordenar a família de agentes de games; essa função pertence ao `criador-games`.
+
+**Delegado por:** `criador-games`.
 
 ---
 
@@ -52,6 +55,7 @@
 ## Habilidades e Skills Associadas
 
 - skill: `../skills/game-narrative-design.md` — [Design de scripts dramáticos e diálogos]
+- skill: `../skills/narrative-structure.md` — [Estrutura narrativa reutilizável]
 - skill: `../skills/documentation-consistency-review.md` — [Revisão de consistência documental]
 
 ---

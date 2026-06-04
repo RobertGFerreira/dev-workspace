@@ -51,6 +51,7 @@ Instrui a criação de documentação, especificações, roadmaps ou outros arte
 ### 🚀 Operacional — Bootstrap e Configuração
 | Arquivo | Descrição |
 |---|---|
+| `agente-base-universal.md` | Validação de aderência à base universal de agentes |
 | `bootstrap-governanca.md` | Inicializa a estrutura de governança de um novo projeto |
 | `commit-guardian.md` | Verifica pré-condições antes de executar um commit |
 
@@ -87,6 +88,16 @@ Instrui a criação de documentação, especificações, roadmaps ou outros arte
 | `narrativa-games.md` | Enredo, lore, diálogos e ramificações da história |
 | `criativo-games.md` | Identidade visual, HUD, menus e UX de games |
 | `monetizacao-games.md` | Economia virtual do jogo, passes, anúncios e preços |
+
+### Conteúdo Editorial
+| Arquivo | Descrição |
+|---|---|
+| `criador-conteudo.md` | Orquestração de roteiro, documentação, estratégia, revisão e publicação |
+| `roteirista-conteudo.md` | Roteiros, narrativas, cenas, vídeos, aulas e storytelling |
+| `documentacao-conteudo.md` | README, guias, manuais, briefings e documentação editorial |
+| `estrategista-conteudo.md` | Público, canal, objetivo, pauta, tom e estratégia editorial |
+| `revisor-conteudo.md` | Revisão de clareza, consistência, escopo e qualidade editorial |
+| `publicacao-conteudo.md` | Readiness de publicação, metadados, links, CTA e checklist de canal |
 
 ### 📢 Marketing e Vendas
 | Arquivo | Descrição |
@@ -147,6 +158,8 @@ Qual é a tarefa?
     ├─► Criar documentação ou spec       → Geração (documentacao-requisitos, spec-agent)
     │
     ├─► Trabalhar com interface visual   → UI/UX (design-ui-ux-pro)
+    │
+    ├─► Produzir conteúdo editorial      → Conteúdo (criador-conteudo)
     │
     ├─► Trabalhar com banco de dados     → Back-end (database-architect)
     │
