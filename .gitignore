@@ -26,3 +26,7 @@ Thumbs.db
 
 # Bibliotecas externas, dumps e referencias locais de auditoria - nao versionar
 Utils/
+
+# Artefatos temporários de ferramentas
+.codex-tmp/
+modelos copy/
