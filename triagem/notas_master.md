@@ -166,6 +166,16 @@ Decisao consolidada: a triagem pode sugerir candidatos, mas a instalacao operaci
 | Seguranca | Transversal | App, API, DB, auth, release ou dados sensiveis | `ENABLE_SECURITY_AGENTS` | Reforcar `seguranca-conformidade` antes de subdividir agentes. |
 | LGPD | Transversal | Dados pessoais de usuarios no Brasil | `ENABLE_LGPD_AGENT` | Tratar privacidade como criterio de arquitetura e documentacao. |
 
+## Adaptacao Godot spec-driven
+
+| Item | Decisao | Observacao |
+|:---|:---|:---|
+| Documento fonte Godot | Usar como referencia de triagem | `modelos/Arquitetura de Automacao de Jogos Godot IA.docx` nao vira norma sozinho. |
+| Proposta operacional | Registrada em `triagem/godot-spec-driven-operacional.md` | Contem mapeamento, agentes recomendados, prompts-base, PIH, fluxo e QA. |
+| Agentes Godot | Nao criar oficialmente ainda | Promocao para `modelos/agentes/` exige `/guard`. |
+| PIH | Recomendado para projetos Godot | Local sugerido: `docs/agents/pih/PIH-YYYYMMDD-NNN.md`. |
+| GdUnit4 / MCP | Recomendados como capacidade opcional | Dependem de projeto Godot real e configuracao explicita. |
+
 ## Proximos passos
 
 1. Revisar manualmente os arquivos copiados em `triagem/agentes/*/referencias`.
