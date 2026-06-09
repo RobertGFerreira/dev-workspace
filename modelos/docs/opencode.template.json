@@ -1,0 +1,19 @@
+{
+  "opencode": {
+    "version": "1.0.0",
+    "project_name": "{{PROJECT_NAME}}",
+    "workspace": {
+      "rules_path": ".opencode/rules/",
+      "agents_path": ".opencode/agents/",
+      "prompts_path": ".opencode/prompts/"
+    },
+    "features": {
+      "auto_agent_routing": true,
+      "prevent_structural_modifications": true
+    },
+    "models": {
+      "default": "gemini-3.5-flash",
+      "fallback": "gemini-3.5-pro"
+    }
+  }
+}

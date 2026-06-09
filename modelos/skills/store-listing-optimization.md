@@ -1,42 +1,61 @@
 # Skill - store-listing-optimization
 
-| Campo | Valor |
-|:---|:---|
-| **Finalidade** | Otimização de metadados para busca (ASO) e conversão na listagem da loja |
-| **Versão** | `1.0.0` |
+**Finalidade:** Otimização de metadados para busca (ASO - App Store Optimization) e conversão na listagem das lojas Apple App Store e Google Play Store.
+**Versão:** 1.1.0
 
 ---
 
 ## 1. Quando Usar
 
-- Ao redigir ou auditar o Título, Descrição Curta e Descrição Longa do app para a Play Store.
-- Ao otimizar palavras-chave do texto com foco em algoritmos de indexação (ASO - App Store Optimization).
+- Ao redigir, traduzir ou auditar metadados textuais de aplicativos para publicação em lojas (título, subtítulo, descrições, palavras-chave).
+- Ao analisar palavras-chave competitivas e posicionamento de busca do aplicativo.
+- Ao estruturar campanhas de testes A/B de metadados ou assets visuais nas fichas de loja.
 
 ---
 
 ## 2. O que Valida (Foco de Auditoria)
 
-- [ ] Os limites de caracteres são respeitados (Título: 30, Descrição Curta: 80, Descrição Longa: 4000).
-- [ ] As principais palavras-chave do nicho estão presentes nos textos sem repetição excessiva (keyword stuffing).
-- [ ] O texto foca nos benefícios, dores solucionadas e apelo visual da aplicação.
+### Limites e Regras de Caracteres por Plataforma
+
+- **Apple App Store:**
+  - [ ] **Título (Title):** Máximo 30 caracteres.
+  - [ ] **Subtítulo (Subtitle):** Máximo 30 caracteres.
+  - [ ] **Texto Promocional (Promotional Text):** Máximo 170 caracteres.
+  - [ ] **Descrição (Description):** Máximo 4.000 caracteres.
+  - [ ] **Palavras-chave (Keywords):** Máximo 100 caracteres. Sem espaços depois da vírgula. Sem termos duplicados ou que já estejam no Título/Subtítulo.
+  - [ ] **Novidades (What's New):** Máximo 4.000 caracteres.
+
+- **Google Play Store:**
+  - [ ] **Título (Title):** Máximo 50 caracteres.
+  - [ ] **Descrição Curta (Short Description):** Máximo 80 caracteres.
+  - [ ] **Descrição Completa (Full Description):** Máximo 4.000 caracteres.
+
+### Qualidade e Coerência de Metadados
+- [ ] Distribuição de palavras-chave estratégicas nas posições iniciais (front-loaded) de títulos e descrições.
+- [ ] Ausência de repetição excessiva de termos (keyword stuffing).
+- [ ] Tradução e localização completas e adequadas culturalmente para todos os idiomas alvo.
+- [ ] Coerência de textos com os arquivos visuais descritos (screenshots, ícones, banners).
 
 ---
 
 ## 3. O que Analisa (Área de Investigação)
 
-- Uso de termos que violem as políticas do Google (ex: "melhor", "grátis", marcas registradas de concorrentes).
-- Descrições genéricas que não informam claramente o objetivo do aplicativo.
+- **Análise de Concorrência:** Sobreposição de termos com líderes de categoria, análise de diferenciação na proposta de valor e identificação de lacunas.
+- **Políticas das Lojas:** Presença de termos proibidos (ex: "melhor", "grátis", "nº 1", ou marcas registradas de concorrentes).
+- **Planejamento de Teste A/B:** Proposta de hipóteses claras para testes de conversão (ex: mudar ícone, screenshots ou descrição curta), com estimativa de tamanho de amostra e tempo mínimo de duração para relevância estatística.
 
 ---
 
 ## 4. Entradas Necessárias e Saídas Esperadas
 
-- **Entradas Necessárias:** Textos propostos para a loja, lista de palavras-chave visadas.
-- **Saídas Esperadas:** Textos finais otimizados e relatório de verificação de limites e diretrizes de ASO.
+- **Entradas:** Proposta de metadados por idioma, lista de palavras-chave prioritárias do nicho, plataforma alvo (Apple / Google / Ambas) e informações sobre concorrentes.
+- **Saídas:** Metadados otimizados para cópia direta nas respectivas caixas da console de publicação, validação de caracteres em tempo real e lista de termos recomendados para o campo de palavras-chave da Apple.
 
 ---
 
 ## 5. Regras de Execução e Bloqueios
 
-- **Regras Operacionais:** Manter consistência linguística em todas as traduções e localizações configuradas.
-- **Bloqueios Obrigatórios (Veto):** Bloquear qualquer menção a preços, promoções ou rankings da loja (ex: "#1 app do mercado") no título, ícone ou descrição curta.
+- **Regras Operacionais:** Nunca use espaços adicionais dentro da lista de palavras-chave da Apple (ex: use `todo,task,organizer` e não `todo, task, organizer`).
+- **Bloqueios Obrigatórios (Veto):**
+  - Menção a preços, promoções ou rankings ("grátis", "promoção", "#1 app") em elementos do Título, Ícone ou Descrição Curta → **BLOQUEADO**.
+  - Nome de concorrente ou marca registrada de terceiros nos metadados visíveis → **BLOQUEADO**.

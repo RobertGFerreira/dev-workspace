@@ -1,0 +1,45 @@
+{
+  "project": {
+    "name": "{{PROJECT_NAME}}",
+    "version": "1.0.0",
+    "type": "{{PROJECT_TYPE}}",
+    "stack": "{{PROJECT_STACK}}",
+    "language": "{{PROJECT_LANGUAGE}}",
+    "target_platform": "{{PROJECT_TARGET_PLATFORM}}"
+  },
+  "governance": {
+    "enabled_agents": [
+      "agente-base-universal",
+      "orquestrador-agentes",
+      "documentacao-requisitos",
+      "spec-agent",
+      "quality-gate",
+      "revisor-codigo"
+    ],
+    "conditional_agents": {
+      "ENABLE_GOOGLE_PLAY_AGENT": false,
+      "ENABLE_GODOT_AGENT": false,
+      "ENABLE_SCRAPING_AGENT": false,
+      "ENABLE_SECURITY_AGENTS": false,
+      "ENABLE_LGPD_AGENT": false
+    },
+    "paths": {
+      "agents": "governance/agents/",
+      "prompts": "governance/prompts/",
+      "skills": "governance/skills/",
+      "plans": "governance/plans/",
+      "tasks": "governance/tasks/"
+    }
+  },
+  "antigravity": {
+    "settings": {
+      "default_model": "gemini-3.5-flash",
+      "temperature": 0.2,
+      "max_tokens": 8192
+    },
+    "linting": {
+      "enforce_markdown_lint": true,
+      "block_on_placeholders": true
+    }
+  }
+}

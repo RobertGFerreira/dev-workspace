@@ -124,11 +124,6 @@ Instrui a criação de documentação, especificações, roadmaps ou outros arte
 |---|---|
 | `google-play-support.md` | Suporte à publicação e políticas do Google Play Console |
 
-### 🌾 Domínio Específico
-| Arquivo | Descrição |
-|---|---|
-| `agro-domain-guard.md` | Regras de domínio para projetos do setor agrícola/rural |
-
 ### 💡 Exploração e Ideação
 | Arquivo | Descrição |
 |---|---|
@@ -162,8 +157,6 @@ Qual é a tarefa?
     ├─► Produzir conteúdo editorial      → Conteúdo (criador-conteudo)
     │
     ├─► Trabalhar com banco de dados     → Back-end (database-architect)
-    │
-    ├─► Domínio agrícola/rural           → Domínio (agro-domain-guard)
     │
     └─► Explorar ideias ou possibilidades → Ideação (ideias-exploracao)
 ```

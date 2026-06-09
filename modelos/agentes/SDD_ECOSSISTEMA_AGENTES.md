@@ -160,10 +160,17 @@ Nao ha banco de dados ou API. O fluxo e documental: demandas entram pelo orquest
 
 | Camada | Regra | Exemplos |
 |:---|:---|:---|
-| Universal | Base reutilizavel; nao depende de stack ou projeto | `agente-base-universal`, `orquestrador-agentes`, `spec-agent` |
-| Tecnologia | Especializa regra universal por stack/plataforma | `flutter-revisor-codigo`, `google-play-support` |
-| Funcional / Dominio | Orquestra ou executa area especifica | `criador-games`, `criador-conteudo` |
-| Projeto | Copia adaptada em repositorio destino | `governance/agents/` |
+| Universal (Camada 1) | Base reutilizável; não depende de stack ou projeto | `agente-base-universal`, `orquestrador-agentes`, `spec-agent` |
+| Tecnologia (Camada 2) | Especializa regra universal por stack/plataforma técnica | `flutter-revisor-codigo`, `google-play-support` |
+| Funcional / Domínio (Camada 3) | Orquestra ou executa lógica e mecânicas de um domínio de negócio | `criador-games`, `criador-conteudo` |
+| Projeto (Camada 4) | Cópia adaptada em repositório destino | `governance/agents/` |
+
+#### Distinção Arquitetural de Abstração (Camada 2 vs. Camada 3)
+
+A linha divisória entre a Camada 2 (Tecnologia/Plataforma) e a Camada 3 (Domínio Funcional) é estrutural:
+
+- **Abstração Tecnológica (Camada 2):** Responde a restrições de sintaxe, linting, compilação, ciclo de vida e APIs de plataformas específicas. Por exemplo, a stack **Flutter** é uma camada técnica. Os agentes especializados em Flutter validam a integridade e boas práticas do framework Dart/Flutter, sendo completamente horizontais e reutilizáveis em qualquer tipo de negócio (seja para um banco ou para um jogo).
+- **Abstração de Domínio (Camada 3):** Responde a regras de negócios, modelagens conceituais, roteirização, gameplay e fluxos lógicos que independem de stack tecnológica. Por exemplo, o design de **Games** e a criação de **Conteúdo Editorial** representam a Camada 3. O core loop de um jogo, o balanceamento de atributos ou a estrutura narrativa de um roteiro funcionam da mesma forma se o jogo for codificado em Flutter (Camada 2), Godot/GDScript (Camada 2) ou Unity/C#.
 
 ### 4.1.1 Padrao unico de artefatos operacionais
 
@@ -398,30 +405,69 @@ O SDD master fica em `modelos/agentes/SDD_ECOSSISTEMA_AGENTES.md`. SDD derivado 
 
 ```mermaid
 flowchart TD
-    USER["Usuario"] --> ORQ["orquestrador-agentes\nclassifica demanda"]
+    classDef base fill:#1e40af,color:#fff,stroke:#1e3a8a
+    classDef domain fill:#059669,color:#fff,stroke:#047857
+    classDef specialist fill:#f8fafc,color:#1e293b,stroke:#94a3b8
+    classDef guard fill:#dc2626,color:#fff,stroke:#991b1b
+    classDef artifact fill:#fef3c7,color:#1f2937,stroke:#f59e0b
+
+    USER["Usuario"] --> ORQ["orquestrador-agentes\nclassifica demanda"]:::base
     ORQ --> DECIDE{"Demanda simples?"}
-    DECIDE -->|sim| BORA["/bora\nexecucao direta"]
-    DECIDE -->|nao| PLAN["Criar plan/tasks\nlocais unicos"]
-    PLAN --> P1["governance/plans/YYYYMMDD-slug.plan.md"]
-    PLAN --> T1["governance/tasks/YYYYMMDD-slug.tasks.md"]
-    BORA --> ROTAS["rotear linha operacional"]
+    DECIDE -->|sim| BORA["/bora\nexecucao direta"]:::artifact
+    DECIDE -->|nao| PLAN["Criar plan/tasks\nlocais unicos"]:::artifact
+    PLAN --> P1["governance/plans/YYYYMMDD-slug.plan.md"]:::artifact
+    PLAN --> T1["governance/tasks/YYYYMMDD-slug.tasks.md"]:::artifact
+    BORA --> ROTAS["rotear linha operacional"]:::base
     PLAN --> ROTAS
 
-    ROTAS --> GAME["criador-games"]
-    ROTAS --> DOC["documentacao-requisitos"]
-    ROTAS --> CONTENT["criador-conteudo"]
-    ROTAS --> DEV["desenvolvimento"]
+    subgraph L3["CAMADA 3 — Domínio Funcional (Negócio)"]
+        GAMES["games\ncriador-games"]:::domain
+        CONTENT["conteudo\ncriador-conteudo"]:::domain
+        
+        GAMES --> GAME_STRUCT["estrutura-games"]:::specialist
+        GAMES --> GAME_NARR["narrativa-games"]:::specialist
+        GAMES --> GAME_CREATIVE["criativo-games"]:::specialist
+        GAMES --> GAME_MON["monetizacao-games"]:::specialist
 
-    DOC --> LIMPA["/limpadoc\npendencias documentais"]
-    DOC --> SDDD["SDD derivado\nSpec Kit operacional"]
-    DOC --> GP["google-play-support\nPlay Console e publicacao"]
-    GP --> TERM["terminal quando necessario\nvalidacao pratica"]
+        CONTENT --> CONTENT_SCRIPT["roteirista-conteudo"]:::specialist
+        CONTENT --> CONTENT_DOC["documentacao-conteudo"]:::specialist
+        CONTENT --> CONTENT_STRAT["estrategista-conteudo"]:::specialist
+        CONTENT --> CONTENT_REVIEW["revisor-conteudo"]:::specialist
+        CONTENT --> CONTENT_PUB["publicacao-conteudo"]:::specialist
+    end
 
-    USER -. "/guard explicito" .-> GUARD["agente-configuracao-governanca\nedita e valida estrutura"]
-    GUARD --> README["modelos/agentes/README.md"]
-    GUARD --> AGENTS["modelos/agentes/*.md"]
-    GUARD --> PROMPTS["modelos/prompts/*.md"]
-    GUARD --> SKILLS["modelos/skills/*.md"]
+    subgraph L2["CAMADA 2 — Especialização por Tecnologia"]
+        FLUTTER["especialistas Flutter\n(UI, State, Sync)"]:::specialist
+        GP["google-play-support\nPlay Console e publicacao"]:::specialist
+    end
+
+    subgraph L1["CAMADA 1 — Agentes Universais / Core"]
+        DOCS["documentacao\ndocumentacao-requisitos"]:::base
+        DEV["desenvolvimento\nespecialistas tecnicos"]:::base
+        
+        DOCS --> LIMPA["/limpadoc\npendencias documentais"]:::specialist
+        DOCS --> SDDD["SDD derivado\nSpec Kit operacional"]:::specialist
+        
+        DEV --> REV["revisor-codigo"]:::specialist
+        DEV --> ARCH["agente-arquitetura"]:::specialist
+        DEV --> API["agente-api-contratos"]:::specialist
+        DEV --> QG["quality-gate"]:::specialist
+    end
+
+    ROTAS --> GAMES
+    ROTAS --> CONTENT
+    ROTAS --> DOCS
+    ROTAS --> DEV
+
+    DEV --> FLUTTER
+    DOCS --> GP
+    GP --> TERM["terminal quando necessario\nvalidacao pratica"]:::artifact
+
+    USER -. "/guard explicito" .-> GUARD["agente-configuracao-governanca\nedita e valida estrutura"]:::guard
+    GUARD --> README["modelos/agentes/README.md"]:::artifact
+    GUARD --> AGENTS["modelos/agentes/*.md"]:::artifact
+    GUARD --> PROMPTS["modelos/prompts/*.md"]:::artifact
+    GUARD --> SKILLS["modelos/skills/*.md"]:::artifact
 ```
 
 ### 9.3 Proposta de atualizacao

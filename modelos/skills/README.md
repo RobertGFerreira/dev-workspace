@@ -130,6 +130,7 @@ Conhecimento especializado de um domínio de negócio — regras, terminologia, 
 ### 📄 Documentação
 | Arquivo | Descrição |
 |---|---|
+| `agent-instructions-review.md` | Auditoria de clareza, concisão e comandos de guias de agentes (AGENTS.md) |
 | `documentation-consistency-review.md` | Revisão de consistência entre código e documentação técnica |
 | `documentation-consistency.md` | Validação de consistência cruzada entre arquivos do repositório |
 | `template-adherence.md` | Validação de correspondência com as diretrizes do template original |
@@ -178,14 +179,6 @@ Conhecimento especializado de um domínio de negócio — regras, terminologia, 
 | `release-readiness.md` | Validação final de chaves, assinaturas, tamanho e bundle (AAB) |
 | `privacy-disclosure-review.md` | Auditoria de políticas de privacidade e declaração de coleta de dados |
 
-### 🏢 Domínio Específico
-| Arquivo | Descrição |
-|---|---|
-| `condominio-domain-knowledge.md` | Contexto de domínio para gestão de propriedades rurais |
-| `trabalhadores-domain-knowledge.md` | Contexto de domínio para gestão de recursos humanos rurais |
-
-> **Nota:** Skills de domínio específico são conhecimento de negócio de um projeto — não são regras técnicas universais. Nunca devem ser invocadas como substituto de skills universais.
-
 ### 📄 Template Base
 | Arquivo | Descrição |
 |---|---|
@@ -223,7 +216,7 @@ Uma skill entra em `skills/` quando:
 | **Testada** | Já foi usada em pelo menos um projeto real com resultado satisfatório |
 | **Sem dados sensíveis** | Nenhuma referência a senhas, tokens, caminhos absolutos ou dados de produção |
 
-Skills muito específicas de um único contexto de negócio (como `condominio-domain-knowledge.md`) são permitidas, mas devem ser claramente identificadas como **conhecimento de domínio** — não como regras técnicas universais.
+Skills muito específicas de um único contexto de negócio do projeto destino são permitidas para uso local, mas devem ser criadas na pasta `governance/skills/` do próprio projeto — não na biblioteca de modelos universais.
 
 ---
 

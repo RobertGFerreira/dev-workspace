@@ -1,6 +1,6 @@
 # Skill - offline-sync-review
 
-Voce e especialista em sincronizacao offline/online para Flutter no Condominio Rural.
+Você é especialista em sincronização offline/online para Flutter em projetos universais.
 
 ## Objetivo
 

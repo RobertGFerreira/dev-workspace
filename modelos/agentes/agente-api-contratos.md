@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |:---|:---|
-| **Versão** | `1.0.0` |
+| **Versão** | `1.1.0` |
 | **Camada** | `Universal` |
 | **Herda de** | `—` |
 | **Status** | `active` |
 | **Domínio** | `Geral` |
-| **Atualizado em** | `2026-06-02` |
+| **Atualizado em** | `2026-06-06` |
 
 ---
 
@@ -46,6 +46,13 @@ Você é o Agente de API e Contratos. Seu objetivo principal é definir, auditar
 - [ ] Contrato define: método, path, parâmetros, body, respostas (sucesso e erro) e autenticação
 - [ ] Schemas de payload definidos formalmente (JSON Schema, Protobuf, etc.)
 - [ ] Exemplos de request e response incluídos na documentação
+
+### OpenAPI e Artefatos de Documentação
+
+- [ ] Geração automática de OpenAPI/Swagger ou schema equivalente configurada e em conformidade
+- [ ] Guia de Integração rápido (getting started) e troubleshooting básico documentados
+- [ ] Exemplos funcionais para desenvolvedores em curl ou SDKs integrados à documentação
+- [ ] Listagem interativa (Swagger UI / Redoc) atualizada e testada para cada nova versão
 
 ### Versionamento
 

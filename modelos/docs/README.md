@@ -35,6 +35,7 @@ Os arquivos aqui presentes são de três naturezas diferentes:
 |---|---|---|
 | `SDD_UNIVERSAL.template.md` | Template | Software Design Document — registro de decisões de design, arquitetura, componentes e integrações |
 | `ARCHITECTURE.template.md` | Template | Visão geral da arquitetura — camadas, fluxos de dados, dependências externas |
+| `GOOGLE_PLAY_DEPLOY.template.md` | Template | Guia universal de preparação e publicação de apps em lojas (Google Play) |
 
 ### 🔐 Documentação de Governança e Segurança
 
@@ -43,12 +44,22 @@ Os arquivos aqui presentes são de três naturezas diferentes:
 | `SECURITY.template.md` | Template | Política de segurança — como reportar vulnerabilidades, versões suportadas |
 | `AGENTE.template.md` | Template | Versão simplificada de definição de agente (pré-AGENTE_UNIVERSAL) |
 
-### 📊 Documentação Analítica
+### 📊 Documentação Analítica e Ferramentas
 
 | Arquivo | Tipo | Uso |
 |---|---|---|
 | `RELATORIO_ANALISE.md` | Documento | Modelo de relatório de análise técnica — diagnóstico de estado atual de um projeto |
 | `AGENT_PROMPT.md` | Documento | Referência de configuração de prompt de agente — padrão de instrução estruturada |
+| `create_agents.md` | Script/Guia | Guia e automação para geração/registro de agentes no ecossistema |
+| `dados.template.md` | Template | Definição e mapeamento de dicionários e fluxos de dados do projeto |
+
+### ⚙️ Configurações e Modelos de Bootstrap IA
+
+| Arquivo | Tipo | Uso |
+|---|---|---|
+| `antigravity.template.json` | Config | Template de configuração para o assistente Antigravity, vinculando agentes e regras |
+| `opencode.template.json` | Config | Regras de ambiente, diretórios de agentes e permissões para o ecossistema OpenCode |
+| `codex.template.md` | Template | Codex de contexto e invariantes técnicos de desenvolvimento de um projeto |
 
 ### 🗂️ Templates Universais
 

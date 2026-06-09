@@ -1,7 +1,7 @@
 # Skill - documentation-consistency-review
 
 **Finalidade:** Validar a consistência entre código e documentação — garantindo que README, specs, arquitetura e docs de requisitos reflitam o estado real do projeto.
-**Versão:** 2.0.0
+**Versão:** 2.1.0
 
 ---
 
@@ -26,6 +26,9 @@ Invocar sempre que um agente revisar ou atualizar documentação, ou quando muda
 - [ ] Mudanças estruturais atualizaram a documentação correspondente
 - [ ] Marcadores de estado usados corretamente: `[INFERIDO]`, `[PENDENTE]`, `[PLANEJADO]`
 - [ ] Nenhum dado sensível, caminho absoluto ou URL privada em documentação versionada
+- [ ] ADRs (Architecture Decision Records) seguem a estrutura padrão (Contexto, Decisão, Consequências) e estão no diretório correto (ex: `docs/adr/` ou `governance/adr/`)
+- [ ] O status do ADR é explícito e segue um ciclo de vida válido (`Proposto`, `Aprovado`, `Depreciado`, `Rejeitado`)
+- [ ] Decisões obsoletas estão devidamente marcadas como `Depreciado` ou `Substituído por ADR-XXXX`
 
 ---
 

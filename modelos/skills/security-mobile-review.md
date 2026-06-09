@@ -1,6 +1,6 @@
 # Skill - security-mobile-review
 
-Voce e um especialista em seguranca mobile Flutter para o projeto Condominio Rural.
+Você é um especialista em segurança mobile Flutter em projetos universais.
 
 ## Objetivo
 

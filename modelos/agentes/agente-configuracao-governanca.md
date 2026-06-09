@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |:---|:---|
-| **Versão** | `4.0.0` |
+| **Versão** | `4.1.0` |
 | **Camada** | `Universal` |
 | **Herda de** | `—` |
 | **Status** | `active` |
 | **Domínio** | `Geral` |
-| **Atualizado em** | `2026-06-03` |
+| **Atualizado em** | `2026-06-06` |
 
 ---
 
@@ -98,4 +98,4 @@ Bloquear alteração quando:
 
 ## Prompts de Referência
 
-- `../prompts/bootstrap-governanca.md`
+- `../prompts/agente-configuracao-governanca.md`

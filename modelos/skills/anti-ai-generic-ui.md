@@ -10,7 +10,7 @@ Impedir que o app fique com cara de IA generica, template pronto ou painel sem c
 
 - Pense antes de agir.
 - Nunca aceitar solucoes visuais genericas so porque parecem modernas.
-- A interface deve parecer um sistema operacional real de fiscalizacao e operacao em campo.
+- A interface deve parecer um sistema operacional real e adequado para a operação e domínio de negócio do projeto.
 
 ## O que bloquear
 
@@ -18,7 +18,7 @@ Impedir que o app fique com cara de IA generica, template pronto ou painel sem c
 2. Dashboards genericos com metricas inventadas.
 3. Textos vagos como "Insights", "Overview", "Performance" ou "AI Summary" sem lastro no dominio.
 4. Componentes bonitos mas desconectados da rotina do usuario.
-5. Icones, cores e microcopys sem relacao com fiscalizacao, trabalhadores, listas, fotos e sincronizacao.
+5. Icones, cores e microcopys genericos ou desconectados do dominio de negocio, dos fluxos de dados e das tarefas operacionais reais do aplicativo.
 
 ## O que exigir
 
@@ -26,7 +26,7 @@ Impedir que o app fique com cara de IA generica, template pronto ou painel sem c
 2. Componentes orientados a tarefa.
 3. Informacao densa, mas organizada para operacao real.
 4. Prioridade para fluxo e clareza antes de estetica.
-5. Identidade visual consistente entre `app_v3` e `trabalhadores_v2`, respeitando contexto de cada um.
+5. Identidade visual consistente entre os modulos e plataformas do ecossistema do aplicativo, respeitando o contexto de cada perfil de usuario.
 
 ## Perguntas obrigatorias
 

@@ -12,16 +12,25 @@
 │ Qualquer linguagem, stack e tipo de projeto                  │
 ├──────────────────────────────────────────────────────────────┤
 │ CAMADA 2 — Especializado por tecnologia                      │
-│ Adiciona regras de stack sem contradizer a Camada 1          │
+│ Regras técnicas de stack/plataforma (ex: Flutter, Android)   │
 ├──────────────────────────────────────────────────────────────┤
 │ CAMADA 3 — Funcional / domínio de negócio                    │
-│ Orquestradores e especialistas por função ou domínio         │
+│ Orquestradores e especialistas lógicos (ex: Games, Conteúdo) │
 ├──────────────────────────────────────────────────────────────┤
 │ CAMADA 4 — Específico de projeto                             │
 │ Cópias em governance/agents/ do repositório de destino       │
 │ NUNCA em modelos/ — é artefato do projeto                    │
 └──────────────────────────────────────────────────────────────┘
 ```
+
+### Distinção entre Camada 2 e Camada 3
+
+A separação entre a **Camada 2 (Tecnologia)** e a **Camada 3 (Funcional/Domínio)** reside no nível de abstração e na dependência de stack:
+
+*   **Camada 2 — Especialização por Tecnologia:** Concentra o conhecimento técnico de ferramentas, frameworks e plataformas (ex: **Flutter**). Os agentes desta camada focam em como construir e otimizar componentes de código (widgets, gerenciamento de estado, lints, compilação de pacotes) de forma horizontal, independentemente do que o aplicativo faz no mundo real.
+    *   *Exemplo:* O agente `flutter-revisor-codigo` revisa se o código Dart segue convenções da linguagem e se o ciclo de vida dos widgets está correto. Ele é agnóstico sobre se o aplicativo é uma ferramenta agrícola ou um aplicativo de banco.
+*   **Camada 3 — Especialização Funcional / Domínio:** Concentra a lógica conceitual de negócio e design de produto (ex: **Games** ou **Conteúdo Editorial**). Os agentes desta camada entendem as regras de engajamento, mecânicas lógicas, storytelling e fluxos funcionais. Estas regras são universais e podem ser implementadas em qualquer stack tecnológica.
+    *   *Exemplo:* O agente `criador-games` orquestra o design de jogo (GDD) e mecânicas de gameplay (core loop). O mesmo game design pode ser codificado usando Flutter (Camada 2), GDScript/Godot (Camada 2) ou Unity/C#.
 
 **Regras de extensão:**
 1. Agente especializado declara `Herda de: {agente-pai}` no metadado.
@@ -248,32 +257,48 @@ flowchart TD
     DIRECT --> ROUTE["rotear por linha operacional"]:::base
     PLAN --> ROUTE
 
-    ROUTE --> GAMES["games\ncriador-games"]:::domain
-    ROUTE --> DOCS["documentacao\ndocumentacao-requisitos"]:::domain
-    ROUTE --> CONTENT["conteudo\ncriador-conteudo"]:::domain
-    ROUTE --> DEV["desenvolvimento\nespecialistas tecnicos"]:::domain
+    subgraph L3["CAMADA 3 — Domínio Funcional (Negócio)"]
+        GAMES["games\ncriador-games"]:::domain
+        CONTENT["conteudo\ncriador-conteudo"]:::domain
+        
+        GAMES --> GAME_STRUCT["estrutura-games"]:::specialist
+        GAMES --> GAME_NARR["narrativa-games"]:::specialist
+        GAMES --> GAME_CREATIVE["criativo-games"]:::specialist
+        GAMES --> GAME_MON["monetizacao-games"]:::specialist
 
-    GAMES --> GAME_STRUCT["estrutura-games"]:::specialist
-    GAMES --> GAME_NARR["narrativa-games"]:::specialist
-    GAMES --> GAME_CREATIVE["criativo-games"]:::specialist
-    GAMES --> GAME_MON["monetizacao-games"]:::specialist
+        CONTENT --> CONTENT_SCRIPT["roteirista-conteudo"]:::specialist
+        CONTENT --> CONTENT_DOC["documentacao-conteudo"]:::specialist
+        CONTENT --> CONTENT_STRAT["estrategista-conteudo"]:::specialist
+        CONTENT --> CONTENT_REVIEW["revisor-conteudo"]:::specialist
+        CONTENT --> CONTENT_PUB["publicacao-conteudo"]:::specialist
+    end
 
-    DOCS --> LIMPADOC["/limpadoc\nconsolidar pendencias"]:::specialist
-    DOCS --> SDD_DER["SDD derivado e Spec Kit operacional"]:::specialist
-    DOCS --> GP["google-play-support\nPlay Console e publicacao"]:::specialist
+    subgraph L2["CAMADA 2 — Especialização por Tecnologia"]
+        FLUTTER["especialistas Flutter\n(UI, State, Sync)"]:::specialist
+        GP["google-play-support\nPlay Console e publicacao"]:::specialist
+    end
+
+    subgraph L1["CAMADA 1 — Agentes Universais / Core"]
+        DOCS["documentacao\ndocumentacao-requisitos"]:::base
+        DEV["desenvolvimento\nespecialistas tecnicos"]:::base
+        
+        DOCS --> LIMPADOC["/limpadoc\nconsolidar pendencias"]:::specialist
+        DOCS --> SDD_DER["SDD derivado e Spec Kit operacional"]:::specialist
+        
+        DEV --> REV["revisor-codigo"]:::specialist
+        DEV --> ARCH["agente-arquitetura"]:::specialist
+        DEV --> API["agente-api-contratos"]:::specialist
+        DEV --> QG["quality-gate"]:::specialist
+    end
+
+    ROUTE --> GAMES
+    ROUTE --> CONTENT
+    ROUTE --> DOCS
+    ROUTE --> DEV
+
+    DEV --> FLUTTER
+    DOCS --> GP
     GP --> GPT["terminal quando necessario\nvalidacao pratica"]:::artifact
-
-    CONTENT --> CONTENT_SCRIPT["roteirista-conteudo"]:::specialist
-    CONTENT --> CONTENT_DOC["documentacao-conteudo"]:::specialist
-    CONTENT --> CONTENT_STRAT["estrategista-conteudo"]:::specialist
-    CONTENT --> CONTENT_REVIEW["revisor-conteudo"]:::specialist
-    CONTENT --> CONTENT_PUB["publicacao-conteudo"]:::specialist
-
-    DEV --> REV["revisor-codigo"]:::specialist
-    DEV --> ARCH["agente-arquitetura"]:::specialist
-    DEV --> API["agente-api-contratos"]:::specialist
-    DEV --> FLUTTER["especialistas Flutter"]:::specialist
-    DEV --> QG["quality-gate"]:::specialist
 
     GUARD["agente-configuracao-governanca\nfora do fluxo automatico"]:::guard
     USER -. "/guard explicito" .-> GUARD

@@ -1,6 +1,6 @@
 # Skill - ui-ux-pro-review
 
-Voce e um especialista senior em UI/UX Flutter do projeto Condominio Rural.
+Você é um especialista sênior em UI/UX Flutter em projetos universais.
 
 ## Objetivo
 
