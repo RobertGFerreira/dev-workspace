@@ -3,7 +3,7 @@
 | Campo | Valor |
 |:---|:---|
 | **Tipo do projeto** | `GOVERNANCA_DE_IA` |
-| **Versao do documento** | `1.1.0` |
+| **Versao do documento** | `1.2.0` |
 | **Status** | `EM ANALISE` |
 | **Data** | `2026-06-04` |
 | **Autores** | `spec-agent` |
@@ -74,6 +74,7 @@ O sistema e uma biblioteca de agentes reutilizaveis em camadas. A camada univers
 | 1 | Humano responsavel | Aprova direcao, excecoes e mudancas sensiveis. |
 | 2 | `agente-configuracao-governanca` | Edita e valida agentes, regras, permissoes, prompts, skills e mapas de governanca. |
 | 3 | `orquestrador-agentes` | Coordena, classifica, executa demandas simples e cria `plan`/`tasks` para demandas complexas; nao edita configuracao. |
+| 3.5 | `conselho-decisao` | Coordena Conselho de Decisão; produz pareceres de crítica multi-perspectiva; não edita governança. |
 | 4 | Agentes especializados | Executam tarefas dentro do escopo declarado. |
 | 5 | Skills e prompts | Fornecem criterios e instrucoes; nao tem autoridade propria. |
 
@@ -83,8 +84,9 @@ O sistema e uma biblioteca de agentes reutilizaveis em camadas. A camada univers
 2. Classificar escopo: agentes, documentacao, SDD, coordenacao, dominio ou tecnologia.
 3. Se a demanda for simples, executar diretamente com `/bora`.
 4. Se a demanda for complexa, criar `plan` em `governance/plans/` e `tasks` em `governance/tasks/`.
-5. Encaminhar para uma das quatro linhas operacionais: games, documentacao, conteudo ou desenvolvimento.
-6. Se houver mudanca estrutural, registrar que o usuario precisa acionar `/guard`; nao chamar o guardiao automaticamente.
+5. Se a demanda exigir crítica multi-perspectiva, acionar `conselho-decisao` via `/conselho` para parecer.
+6. Encaminhar para uma das quatro linhas operacionais: games, documentacao, conteudo ou desenvolvimento.
+7. Se houver mudanca estrutural, registrar que o usuario precisa acionar `/guard`; nao chamar o guardiao automaticamente.
 7. Consolidar resultado, riscos e proximos passos.
 
 ### 2.3 Fluxo de execucao
@@ -228,6 +230,11 @@ Conteudo especifico de projeto nao deve ser gravado em `modelos/`. Quando um mod
 | `validador-documentacao` | Lint e conformidade documental | Markdown, templates, links | Aprovado/reprovado, correcoes | Docs quando autorizado | Configuracao de agentes | Valida docs e agentes por template, sem editar governanca |
 | `distribuidor-aplicativos` | Readiness de release e distribuicao | Build, assets, privacidade | Checklist de release | Docs/checklists de release | Configuracao de agentes | Base do `google-play-support` |
 | `ideias-exploracao` | Discovery e analise de alternativas | Problema, restricoes, hipoteses | Opcoes, tradeoffs, recomendacoes | Artefatos de ideacao | Governanca de agentes | Nao implementa por si so |
+| `conselho-decisao` | Orquestrador do Conselho de Decisao | Demanda de critica (SDD, decisao, feature, testes) | Parecer consolidado com perspectivas multiplas | `governance/plans/YYYYMMDD-slug.parecer.md` | Agentes, prompts, skills, governanca estrutural | Acionado via `/conselho` ou handoff do `orquestrador-agentes` |
+| `caminho-correto` | Conselheiro de validacao de conformidade | SDD ou decisao para revisar | Parecer de conformidade | Nenhum arquivo | Governanca estrutural | Acionado pelo `conselho-decisao` |
+| `caca-falhas` | Conselheiro de busca ativa de falhas | SDD, decisao ou feature para analisar | Parecer de riscos e casos de teste | Nenhum arquivo | Governanca estrutural | Acionado pelo `conselho-decisao` |
+| `fora-da-caixa` | Conselheiro de alternativas criativas | Feature ou decisao para expandir | Parecer com alternativas e expansoes | Nenhum arquivo | Governanca estrutural | Acionado pelo `conselho-decisao` |
+| `leigo-radical` | Conselheiro de questionamento radical | Qualquer demanda para simplificar | Parecer com questionamentos e simplificacoes | Nenhum arquivo | Governanca estrutural | Acionado pelo `conselho-decisao` |
 | `flutter-revisor-codigo` | Revisao Dart/Flutter | Codigo Flutter, lint, UI | Achados Flutter | Codigo Flutter se autorizado | Governanca de agentes | Herda `revisor-codigo` |
 | `flutter-quality-gate` | Gate final Flutter | Testes, analyze, docs | Status final Flutter | Relatorios de validacao | Governanca de agentes | Herda `quality-gate` |
 | `flutter-ui-ux-pro` | UI/UX Flutter | Telas, temas, widgets | Auditoria e ajustes UI autorizados | Codigo/UI Flutter se autorizado | Agentes e configs | Herda `agente-base-universal` |
@@ -310,6 +317,11 @@ Para `google-play-support`, o uso de terminal e permitido para localizar e inspe
 | `validador-documentacao` | `documentation-consistency`, `template-adherence`, `structure-review`, `markdown-quality`, `placeholder-governance` | Lint/documentacao | Edicao de governanca |
 | `distribuidor-aplicativos` | `release-readiness`, `asset-compliance`, `privacy-disclosure-review` | Readiness de release | Agentes/configs |
 | `ideias-exploracao` | Nao declarada no agente | Discovery e alternativas | Execucao/edicao estrutural |
+| `conselho-decisao` | `decision-critique`, `sdd-review`, `test-derivation`, `feature-expansion` | Coordenacao do conselho, consolidacao de pareceres, handoff | Edicao de agentes/governanca |
+| `caminho-correto` | `decision-critique`, `sdd-review` | Validacao de conformidade de SDD e decisoes | Edicao de agentes/governanca |
+| `caca-falhas` | `sdd-review`, `test-derivation` | Busca de falhas, riscos e derivacao de testes | Edicao de agentes/governanca |
+| `fora-da-caixa` | `decision-critique`, `feature-expansion` | Proposicao de alternativas e expansao de features | Edicao de agentes/governanca |
+| `leigo-radical` | `sdd-review`, `test-derivation`, `feature-expansion` | Questionamento de premissas e simplificacao | Edicao de agentes/governanca |
 | `flutter-revisor-codigo` | `code-review-universal`, `flutter-code-review`, `documentation-consistency-review`, `security-mobile-review`, `flutter-analyze-lint` | Codigo Flutter | Governanca |
 | `flutter-quality-gate` | `documentation-consistency-review`, `flutter-analyze-lint` | Gate Flutter | Criacao de agentes |
 | `flutter-ui-ux-pro` | `ui-ux-pro-review`, `anti-ai-generic-ui`, `flutter-ui-standards` | UI/UX Flutter | Economia, narrativa, agentes |
@@ -345,6 +357,7 @@ Skills genericas demais devem ser restringidas ou renomeadas quando:
 | `/bora` | Executa a etapa atual depois da classificacao do orquestrador | Nao cria autoridade estrutural e nao substitui plan/tasks quando a demanda for complexa | Agente classificado pelo orquestrador | Nao |
 | `/limpadoc` | Le plan/tasks, identifica concluido e pendente, e consolida documentacao operacional | Nao arquiva automaticamente e nao altera governanca | `documentacao-requisitos` | Nao |
 | `/sdd` | Cria ou revisa SDD master, SDD derivado e artefatos Spec Kit | Nao altera agentes, prompts, skills, permissoes ou hierarquia | `spec-agent` | Nao |
+| `/conselho` | Aciona o Conselho de Decisao para critica multi-perspectiva de SDD, decisoes tecnicas ou features | Nao edita agentes, prompts, skills, permissoes ou governanca | `conselho-decisao` | Nao |
 | `/guard` | Aciona explicitamente o guardiao para mudancas estruturais de agentes e governanca | Nao executa produto e nao e chamado automaticamente pelo orquestrador | `agente-configuracao-governanca` | Sim, dentro do escopo aprovado |
 
 As tags definem intencao e escopo, nao autoridade implicita. Plan e tasks nao sao tags: sao artefatos operacionais criados pelo orquestrador em `governance/plans/` e `governance/tasks/` quando a demanda for complexa.
@@ -525,6 +538,7 @@ flowchart TD
 | `PROJECT_TARGET_PLATFORM` | `android`, `ios`, `web`, `desktop`, `backend`, `console`, `mixed` | Define plataforma alvo. |
 | `ENABLE_GOOGLE_PLAY_AGENT` | `true` / `false` | Ativa suporte Google Play quando a plataforma justificar. |
 | `ENABLE_GODOT_AGENT` | `true` / `false` | Ativa linha tecnica Godot/GDScript para game Godot. |
+| `ENABLE_DECISION_COUNCIL` | `true` / `false` | Ativa Conselho de Decisao para critica de SDD, features e testes. |
 | `ENABLE_SCRAPING_AGENT` | `true` / `false` | Ativa coleta publica limitada e permitida. |
 | `ENABLE_SECURITY_AGENTS` | `true` / `false` | Ativa seguranca transversal. |
 | `ENABLE_LGPD_AGENT` | `true` / `false` | Ativa privacidade/LGPD quando houver dados pessoais. |
@@ -660,6 +674,7 @@ Bloquear quando:
 | Games | `criador-games`, `estrutura-games`, `narrativa-games`, `criativo-games`, `monetizacao-games` | GDD, mecanicas, narrativa, visual e economia. |
 | Conteudo | `criador-conteudo`, `roteirista-conteudo`, `documentacao-conteudo`, `estrategista-conteudo`, `revisor-conteudo`, `publicacao-conteudo` | Producao editorial de ponta a ponta. |
 | Exploracao e marketing | `ideias-exploracao`, `marketing-sistemas` | Discovery e posicionamento. |
+| Conselho de Decisao | `conselho-decisao`, `caminho-correto`, `caca-falhas`, `fora-da-caixa`, `leigo-radical` | Critica multi-perspectiva de SDD, decisoes tecnicas, features e derivacao de testes. |
 
 ---
 
@@ -698,6 +713,7 @@ Bloquear quando:
 | `/limpadoc` | Consolidacao documental de pendencias a partir de plan/tasks. |
 | `/guard` | Governanca estrutural de agentes. |
 | `/sdd` | SDD e Spec Kit. |
+| `/conselho` | Conselho de Decisao — critica multi-perspectiva. |
 
 ---
 
@@ -718,6 +734,7 @@ As skills padronizadas devem permanecer registradas em `modelos/skills/README.md
 | Conteudo | `content-orchestration`, `editorial-structure`, `narrative-structure`, `audience-targeting`, `publication-readiness`, `quality-review`, `scope-control` |
 | Marketing | `product-positioning`, `audience-segmentation`, `value-proposition-writing`, `launch-campaign-planning`, `conversion-copy-review`, `feature-storytelling` |
 | Release | `release-readiness`, `asset-compliance`, `play-console-checklist`, `store-listing-optimization`, `android-policy-review` |
+| Decisao e Critica | `decision-critique`, `sdd-review`, `test-derivation`, `feature-expansion` |
 
 ---
 

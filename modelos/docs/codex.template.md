@@ -40,3 +40,4 @@
 - Leia sempre a documentação pertinente antes de alterar o código.
 - Respeite os limites de escopo e não altere arquivos de governança sem permissão.
 - Use marcadores de estado (`[INFERIDO]`, `[PENDENTE]`) em caso de dúvida.
+- Se o projeto tiver o Conselho de Decisão ativo (`ENABLE_DECISION_COUNCIL=true`), acione `/conselho` para crítica multi-perspectiva antes de decisões técnicas relevantes, SDDs formais e definição de features complexas.

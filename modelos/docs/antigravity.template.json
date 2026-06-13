@@ -17,6 +17,7 @@
       "revisor-codigo"
     ],
     "conditional_agents": {
+      "ENABLE_DECISION_COUNCIL": false,
       "ENABLE_GOOGLE_PLAY_AGENT": false,
       "ENABLE_GODOT_AGENT": false,
       "ENABLE_SCRAPING_AGENT": false,

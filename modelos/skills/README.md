@@ -179,6 +179,14 @@ Conhecimento especializado de um domínio de negócio — regras, terminologia, 
 | `release-readiness.md` | Validação final de chaves, assinaturas, tamanho e bundle (AAB) |
 | `privacy-disclosure-review.md` | Auditoria de políticas de privacidade e declaração de coleta de dados |
 
+### 🧠 Decisão e Crítica
+| Arquivo | Descrição |
+|---|---|
+| `decision-critique.md` | Crítica estruturada de decisões técnicas e de produto |
+| `sdd-review.md` | Revisão estruturada de Software Design Documents |
+| `test-derivation.md` | Derivação sistemática de casos de teste |
+| `feature-expansion.md` | Expansão criativa e estruturada de features |
+
 ### 📄 Template Base
 | Arquivo | Descrição |
 |---|---|

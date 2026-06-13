@@ -129,6 +129,15 @@ Instrui a criação de documentação, especificações, roadmaps ou outros arte
 |---|---|
 | `ideias-exploracao.md` | Prompt de exploração criativa para ideação de features |
 
+### 🧠 Decisão e Crítica
+| Arquivo | Descrição |
+|---|---|
+| `conselho-decisao.md` | Coordenação do Conselho de Decisão para crítica multi-perspectiva |
+| `caminho-correto.md` | Validação de conformidade com requisitos e padrões |
+| `caca-falhas.md` | Busca ativa de falhas, riscos e edge cases |
+| `fora-da-caixa.md` | Proposição de alternativas criativas e features não óbvias |
+| `leigo-radical.md` | Questionamento de premissas e simplificação forçada |
+
 ### 🤝 Orquestração
 | Arquivo | Descrição |
 |---|---|

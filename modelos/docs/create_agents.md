@@ -76,6 +76,7 @@ Variaveis minimas:
 | `PROJECT_TARGET_PLATFORM` | `android`, `ios`, `web`, `desktop`, `backend`, `console`, `mixed` | Define plataforma alvo. |
 | `ENABLE_GOOGLE_PLAY_AGENT` | `true` / `false` | Ativa suporte Google Play quando fizer sentido. |
 | `ENABLE_GODOT_AGENT` | `true` / `false` | Ativa linha tecnica Godot/GDScript quando o projeto for game Godot. |
+| `ENABLE_DECISION_COUNCIL` | `true` / `false` | Ativa Conselho de Decisão para crítica de SDD, features e testes. |
 | `ENABLE_SCRAPING_AGENT` | `true` / `false` | Ativa coleta publica limitada e documentada. |
 | `ENABLE_SECURITY_AGENTS` | `true` / `false` | Ativa linha de seguranca transversal. |
 | `ENABLE_LGPD_AGENT` | `true` / `false` | Ativa privacidade/LGPD quando houver dados pessoais. |
@@ -121,6 +122,7 @@ Use perguntas somente quando a leitura do repositorio nao der evidencia suficien
 |:---|:---|:---|
 | Qual e o tipo principal do projeto? | Quando `PROJECT_TYPE` nao for claro | `PROJECT_TYPE` |
 | Qual stack/linguagem deve guiar os agentes? | Quando houver stack mista ou ambigua | `PROJECT_STACK`, `PROJECT_LANGUAGE` |
+| O projeto exige conselho de decisao para critica de SDD, features e testes? | Quando projeto exige SDD formal, risco tecnico significativo ou critica multi-perspectiva | `ENABLE_DECISION_COUNCIL` |
 | O alvo inclui Android/Google Play? | Quando houver Flutter/Android ou distribuicao mobile | `ENABLE_GOOGLE_PLAY_AGENT` |
 | O jogo usa Godot/GDScript? | Quando `PROJECT_TYPE=game` | `ENABLE_GODOT_AGENT` |
 | A tarefa exige coleta de dados publicos? | Quando houver pesquisa, benchmarking ou metadata publica | `ENABLE_SCRAPING_AGENT` |
@@ -204,6 +206,7 @@ Adicione especialistas somente com evidencia:
 | SQLite, offline, sincronizacao | `sync-data-guard` |
 | Jogos | `criador-games` e apenas os especialistas necessarios |
 | Conteudo editorial | `criador-conteudo` e apenas os especialistas necessarios |
+| SDD formal, risco tecnico ou critica multi-perspectiva | `conselho-decisao` e conselheiros conforme necessidade |
 
 Se dois agentes parecerem redundantes, selecione o mais abrangente ou redefina escopo antes de instalar.
 
@@ -211,6 +214,7 @@ Se dois agentes parecerem redundantes, selecione o mais abrangente ou redefina e
 
 | Item | Tipo | Condicao de criacao | Pergunta ao usuario | Variavel de configuracao | Destino | Observacao |
 |:---|:---|:---|:---|:---|:---|:---|
+| Conselho de Decisao | Linha opcional de critica | Projeto exige SDD formal, risco tecnico significativo ou critica multi-perspectiva | O projeto exige conselho de decisao para critica de SDD, features e testes? | `ENABLE_DECISION_COUNCIL=true` | `governance/agents/` | Atua como Camada 1.5; nao substitui orquestradores existentes. |
 | `google-play-support` | Agente opcional | Projeto Android, Flutter Android, AAB/APK, Play Console ou publicacao mobile | Deseja ativar suporte Google Play/Publicacao Android? | `ENABLE_GOOGLE_PLAY_AGENT=true` | `governance/agents/` | Subordinado a `documentacao-requisitos`; nao vira orquestrador. |
 | Linha Godot/GDScript | Linha opcional de games | `PROJECT_TYPE=game` e stack Godot confirmada | O jogo usa Godot/GDScript e precisa de apoio tecnico do motor? | `ENABLE_GODOT_AGENT=true` | `governance/agents/` e `governance/skills/` | Usar `criador-games` como orquestrador; nao criar agente monolitico. |
 | Raspagem/coleta publica | Agente opcional futuro | Pesquisa documental, benchmarking ou metadata publica permitida | A coleta sera apenas em fontes publicas e permitidas? | `ENABLE_SCRAPING_AGENT=true` | `governance/agents/` | Bloquear login, captcha, paywall, bypass e violacao de termos. |
@@ -219,6 +223,7 @@ Se dois agentes parecerem redundantes, selecione o mais abrangente ou redefina e
 
 ### Regras para opcionais
 
+- Conselho de Decisao nunca e instalado como padrao universal; somente quando projeto justificar SDD formal, risco tecnico ou critica multi-perspectiva.
 - Google Play nunca e instalado como padrao universal.
 - Godot nunca e instalado como padrao universal.
 - Raspagem nunca e instalada sem limites legais e operacionais explicitos.
@@ -403,6 +408,7 @@ Antes de concluir:
 - [ ] Cada prompt instalado esta vinculado a agente ou tarefa.
 - [ ] Cada skill instalada esta vinculada a agente.
 - [ ] Nenhum especialista foi instalado sem evidencia.
+- [ ] Conselho de Decisao nao foi instalado por padrao universal; somente quando justificado.
 - [ ] Google Play, Godot e raspagem nao foram instalados por padrao universal.
 - [ ] Raspagem, se ativada, possui limites de compliance e fontes publicas permitidas.
 - [ ] Seguranca/LGPD foi avaliada quando houver app, API, DB, auth ou dados pessoais.
@@ -430,6 +436,7 @@ Use este formato:
    - PROJECT_STACK:
    - PROJECT_LANGUAGE:
    - PROJECT_TARGET_PLATFORM:
+   - ENABLE_DECISION_COUNCIL:
    - ENABLE_GOOGLE_PLAY_AGENT:
    - ENABLE_GODOT_AGENT:
    - ENABLE_SCRAPING_AGENT:

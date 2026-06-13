@@ -103,6 +103,7 @@ Antes de copiar agentes para `governance/agents/`, o bootstrap deve detectar ou 
 | Base universal | Obrigatorio em instalacao de governanca | Pedido de instalacao/configuracao de governanca | N/A | N/A | `governance/agents/` | Nao substitui especialistas. |
 | Orquestrador pai | Obrigatorio em instalacao de governanca | Projeto precisa coordenar agentes | N/A | N/A | `governance/agents/` | Coordena; nao edita estrutura. |
 | Documentacao/SDD | Obrigatorio quando houver governanca documental | Projeto precisa README, guias, SDD ou Spec Kit | N/A | N/A | `governance/agents/` | Mantem docs e especificacoes. |
+| Conselho de Decisao | Opcional | Projeto exige SDD formal, risco tecnico significativo ou critica multi-perspectiva | O projeto exige conselho de decisao para critica de SDD, features e testes? | `ENABLE_DECISION_COUNCIL` | `governance/agents/` | Atua como Camada 1.5; nao substitui orquestradores existentes. |
 | Google Play | Opcional | Flutter/Android, AAB/APK, Play Console ou publicacao Android | Deseja ativar suporte Google Play/Publicacao Android? | `ENABLE_GOOGLE_PLAY_AGENT` | `governance/agents/` | Subordinado a `documentacao-requisitos`. |
 | Godot/GDScript | Opcional | Projeto de game com Godot confirmado | O jogo usa Godot/GDScript? | `ENABLE_GODOT_AGENT` | `governance/agents/` e `governance/skills/` | Usa `criador-games`; nao cria agente faz-tudo. |
 | Raspagem publica | Opcional | Pesquisa, benchmarking ou metadata publica permitida | A coleta sera apenas em fontes publicas e permitidas? | `ENABLE_SCRAPING_AGENT` | `governance/agents/` | Bloqueia login, captcha, paywall e violacao de termos. |
@@ -117,6 +118,7 @@ Antes de copiar agentes para `governance/agents/`, o bootstrap deve detectar ou 
 | `PROJECT_STACK` | Define stack dominante: Flutter, Android, Godot, Node, Python, Java ou mista. |
 | `PROJECT_LANGUAGE` | Define linguagem dominante: Dart, Kotlin, GDScript, JavaScript, TypeScript, Python, Java ou mista. |
 | `PROJECT_TARGET_PLATFORM` | Define alvo: Android, iOS, web, desktop, backend, console ou misto. |
+| `ENABLE_DECISION_COUNCIL` | Ativa Conselho de Decisão quando o projeto exigir SDD formal, risco técnico ou crítica multi-perspectiva. |
 | `ENABLE_GOOGLE_PLAY_AGENT` | Ativa Google Play somente quando a plataforma justificar. |
 | `ENABLE_GODOT_AGENT` | Ativa linha tecnica Godot somente em projeto de game Godot. |
 | `ENABLE_SCRAPING_AGENT` | Ativa coleta publica limitada somente com compliance definido. |
@@ -125,6 +127,7 @@ Antes de copiar agentes para `governance/agents/`, o bootstrap deve detectar ou 
 
 ### Regras de opcionais
 
+- Conselho de Decisão não é universal; só existe quando o projeto justificar SDD formal, risco técnico ou crítica multi-perspectiva.
 - Google Play nao e universal; so existe quando o projeto justificar publicacao Android.
 - Godot nao e universal; so existe quando o projeto for game e o usuario confirmar Godot/GDScript.
 - Games continuam separados por responsabilidade: estrutura, narrativa, criativo, monetizacao e tecnico do motor quando aplicavel.
@@ -178,6 +181,11 @@ Regra: conteúdo específico de projeto não deve ser gravado em `modelos/`; dev
 | `validador-documentacao` | Conformidade e lints markdown de templates | `documentation-consistency`, `template-adherence`, `structure-review`, `markdown-quality`, `placeholder-governance` | `validador-documentacao` | `active` |
 | `distribuidor-aplicativos` | Preparação, chaves de assinatura e readiness de release | `release-readiness`, `asset-compliance`, `privacy-disclosure-review` | — | `active` |
 | `ideias-exploracao` | Discovery, exploração técnica e análise de alternativas | — | `ideias-exploracao` | `active` |
+| `conselho-decisao` | Orquestrador do Conselho de Decisão — coordena crítica multi-perspectiva | `decision-critique`, `sdd-review`, `test-derivation`, `feature-expansion` | `conselho-decisao` | `active` |
+| `caminho-correto` | Conselheiro de validação de conformidade | `decision-critique`, `sdd-review` | `caminho-correto` | `active` |
+| `caca-falhas` | Conselheiro de busca ativa de falhas | `sdd-review`, `test-derivation` | `caca-falhas` | `active` |
+| `fora-da-caixa` | Conselheiro de alternativas criativas | `decision-critique`, `feature-expansion` | `fora-da-caixa` | `active` |
+| `leigo-radical` | Conselheiro de questionamento radical | `sdd-review`, `test-derivation`, `feature-expansion` | `leigo-radical` | `active` |
 
 ### Camada 2 — Especializados (Tecnologia/Plataforma)
 
@@ -388,6 +396,11 @@ flowchart TD
 | `flutter-state-arch` | flutter-state | flutter-code | flutter-perf | flutter-state-arch |
 | `sync-data-guard` | offline-sync | sqlite-integrity | flutter-sqlite | — |
 | `google-play-support` | play-console-checklist | store-listing-optimization | android-policy-review | google-play-support |
+| `conselho-decisao` | decision-critique | sdd-review | test-derivation | conselho-decisao |
+| `caminho-correto` | decision-critique | — | — | caminho-correto |
+| `caca-falhas` | sdd-review | test-derivation | — | caca-falhas |
+| `fora-da-caixa` | decision-critique | feature-expansion | — | fora-da-caixa |
+| `leigo-radical` | sdd-review | test-derivation | feature-expansion | leigo-radical |
 
 ---
 

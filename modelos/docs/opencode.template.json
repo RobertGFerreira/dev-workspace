@@ -9,7 +9,8 @@
     },
     "features": {
       "auto_agent_routing": true,
-      "prevent_structural_modifications": true
+      "prevent_structural_modifications": true,
+      "enable_decision_council": false
     },
     "models": {
       "default": "gemini-3.5-flash",
