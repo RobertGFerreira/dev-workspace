@@ -3,7 +3,7 @@
 | Campo | Valor |
 |:---|:---|
 | **Tipo do projeto** | `GOVERNANCA_DE_IA` |
-| **Versao do documento** | `1.2.0` |
+| **Versao do documento** | `1.3.0` |
 | **Status** | `EM ANALISE` |
 | **Data** | `2026-06-04` |
 | **Autores** | `spec-agent` |
@@ -240,7 +240,7 @@ Conteudo especifico de projeto nao deve ser gravado em `modelos/`. Quando um mod
 | `flutter-ui-ux-pro` | UI/UX Flutter | Telas, temas, widgets | Auditoria e ajustes UI autorizados | Codigo/UI Flutter se autorizado | Agentes e configs | Herda `agente-base-universal` |
 | `flutter-state-arch` | Estado Flutter | Providers, BLoC, GetX, Riverpod | Riscos de estado, plano | Codigo de estado se autorizado | Governanca de agentes | Especializacao de arquitetura Flutter |
 | `sync-data-guard` | Sincronizacao offline/online | Fluxos, SQLite, filas | Riscos de sync e integridade | Codigo/dados se autorizado | Governanca de agentes | Herda `guardiao-fluxo` |
-| `google-play-support` | Especialista tecnico-documental de Google Play subordinado a `documentacao-requisitos` | Manifest, politicas, assets, store listing, evidencias de release | Checklist tecnico, riscos de loja, evidencias praticas e insumos documentais | Docs/assets de publicacao e consultas de terminal dentro do escopo | Governanca de agentes, coordenacao documental e publicacao externa | Atua sob a frente documental; pode usar terminal para validacao operacional quando a tarefa exigir |
+| `google-play-support` | Especialista tecnico-documental de Google Play subordinado a `documentacao-requisitos` | Manifest, gradle, assets, permissoes, store listing, evidencias de release | Estrutura `google_play/` com manual, permissoes, respostas, comandos keystore, dados e artefatos; Task/Plan/SDD arquivados | Docs/assets de publicacao, estrutura `google_play/` e consultas de terminal dentro do escopo | Governanca de agentes, coordenacao documental, publicacao externa e segredos reais em arquivos versionados | Atua sob a frente documental; isola configuracao por app; nunca versiona keystore, tokens ou senhas |
 | `criador-games` | Orquestrador de games e GDD | Ideia de jogo, publico, plataforma | GDD consolidado, delegacao | GDD e artefatos de games | Codigo de gameplay e configs de agentes | Delega especialistas de games |
 | `estrutura-games` | Mecanicas, core loop e balanceamento | Regras, numeros, progressao | Sistemas e tabelas de balanceamento | Artefatos de gameplay/design | Narrativa, HUD, governanca | Delegado por `criador-games` |
 | `narrativa-games` | Historia, lore e dialogos | Universo, tom, personagens | Roteiros, arcos, dialogos | Artefatos narrativos | Balanceamento, HUD, governanca | Delegado por `criador-games` |
@@ -327,7 +327,7 @@ Para `google-play-support`, o uso de terminal e permitido para localizar e inspe
 | `flutter-ui-ux-pro` | `ui-ux-pro-review`, `anti-ai-generic-ui`, `flutter-ui-standards` | UI/UX Flutter | Economia, narrativa, agentes |
 | `flutter-state-arch` | `flutter-state-review`, `flutter-code-review`, `flutter-performance-guard` | Estado Flutter | UI visual pura |
 | `sync-data-guard` | `offline-sync-review`, `sqlite-integrity-review`, `flutter-sqlite-review` | Sync/SQLite | Marketing/conteudo |
-| `google-play-support` | `play-console-checklist`, `store-listing-optimization`, `android-policy-review`, `asset-compliance`, `release-readiness`, `privacy-disclosure-review` | Google Play sob coordenacao de `documentacao-requisitos`; terminal se houver validacao pratica | Codigo de produto, governanca estrutural ou publicacao externa |
+| `google-play-support` | `play-console-checklist`, `store-listing-optimization`, `android-policy-review`, `asset-compliance`, `release-readiness`, `privacy-disclosure-review` | Google Play sob coordenacao de `documentacao-requisitos`; terminal se houver validacao pratica; geracao de manual, permissoes, respostas e comandos keystore | Codigo de produto, governanca estrutural ou publicacao externa |
 | `criador-games` | `game-loop-design`, `game-structure-planning`, `game-release-readiness`, `scope-control`, `documentation-consistency-review` | GDD e delegacao de games | Especializacao detalhada se houver agente responsavel |
 | `estrutura-games` | `game-structure-planning`, `game-loop-design`, `game-mechanics-balance`, `scope-control` | Mecanicas/loop/balanceamento | Narrativa/HUD |
 | `narrativa-games` | `game-narrative-design`, `narrative-structure`, `documentation-consistency-review` | Historia/lore/dialogos | Balanceamento/HUD |

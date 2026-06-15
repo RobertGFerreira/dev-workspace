@@ -196,7 +196,7 @@ Regra: conteúdo específico de projeto não deve ser gravado em `modelos/`; dev
 | `flutter-ui-ux-pro` | UI/UX em Flutter — responsividade, tema, acessibilidade | `agente-base-universal` | `ui-ux-pro-review`, `anti-ai-generic-ui`, `flutter-ui-standards` | `active` |
 | `flutter-state-arch` | Arquitetura de estado Flutter — GetX, Riverpod, BLoC, Provider | `agente-arquitetura` | `flutter-state-review`, `flutter-code-review`, `flutter-performance-guard` | `active` |
 | `sync-data-guard` | Sincronização offline/online e integridade SQLite | `guardiao-fluxo` | `offline-sync-review`, `sqlite-integrity-review`, `flutter-sqlite-review` | `active` |
-| `google-play-support` | Especialista técnico-documental de Google Play subordinado à frente documental | `distribuidor-aplicativos` | `play-console-checklist`, `store-listing-optimization`, `android-policy-review`, `asset-compliance`, `release-readiness`, `privacy-disclosure-review` | `active` |
+| `google-play-support` | Especialista técnico-documental de Google Play — auditoria, manual, permissões, respostas e comandos keystore | `distribuidor-aplicativos` | `play-console-checklist`, `store-listing-optimization`, `android-policy-review`, `asset-compliance`, `release-readiness`, `privacy-disclosure-review` | `active` |
 
 ### Camada 3 — Funcionais / Domínio
 
