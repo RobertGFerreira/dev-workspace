@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |:---|:---|
-| **Versão** | `3.0.0` |
+| **Versão** | `4.0.0` |
 | **Camada** | `Plataforma (Camada 2)` |
 | **Herda de** | `distribuidor-aplicativos` |
 | **Status** | `active` |
 | **Domínio** | `Android / Mobile` |
-| **Atualizado em** | `2026-06-12` |
+| **Atualizado em** | `2026-06-15` |
 
 ---
 
@@ -94,7 +94,9 @@ Se encontrar segredo real, sanitize e substitua por placeholder seguro.
 
 ## Estrutura a criar/manter no app
 
-Dentro da pasta do aplicativo, criar ou manter:
+Dentro da pasta do aplicativo, criar ou manter a estrutura `google_play/`
+copiando os templates de `modelos/docs/google-play/` como base,
+preenchendo com dados reais extraídos do projeto.
 
 ```
 agentes/
@@ -102,18 +104,35 @@ prompts/
 skills/
 docs/
 dados/google-play-dados.md
-google_play/README.md
-google_play/manual-publicacao.md
-google_play/respostas-play-console.md
-google_play/permissoes-app.md
-google_play/politica-privacidade.md
-google_play/versoes-e-notas.md
-google_play/comandos/
+google_play/README.md                                     ← copiar de modelos/docs/google-play/README.md
+google_play/dados-aplicativo.md                           ← copiar de dados-aplicativo.template.md
+google_play/dados-sensiveis.md                            ← copiar de dados-sensiveis.template.md (NUNCA versionar com valores reais)
+google_play/manual-publicacao.md                          ← copiar de tutorial-cadastro-e-publicacao-google-play.template.md
+google_play/respostas-play-console.md                     ← copiar de respostas-play-console.template.md
+google_play/permissoes-app.md                             ← copiar de permissoes-e-politicas.template.md
+google_play/comandos/gerar-keystore.md                    ← copiar de comandos/gerar-keystore.template.md
+google_play/comandos/exportar-pem.md                      ← copiar de comandos/exportar-pem.template.md
+google_play/comandos/mover-arquivos.md                    ← copiar de comandos/mover-arquivos.template.md
+google_play/comandos/ajustar-configuracao-android.md      ← copiar de comandos/ajustar-configuracao-android.template.md
 google_play/artefatos/
 google_play/arquivos/tasks/
 google_play/arquivos/plans/
 google_play/arquivos/sdds/
 ```
+
+---
+
+## Fluxo Padrão (Template-Based)
+
+1. **Criar Task** → descrever demanda de Google Play
+2. **Criar Plan** → etapas da entrega
+3. **Criar SDD** → o que precisa, o que não precisa, o que será criado/lido, o que depende de preenchimento manual, o que é sensível, o que não pode ser versionado
+4. **Ler o projeto** → extrair package name, versionName, versionCode, permissões, nome do app, assets
+5. **Copiar templates** de `modelos/docs/google-play/` para `google_play/` no app
+6. **Preencher** cada template com dados reais extraídos do projeto
+7. **Manter placeholders** para dados sensíveis (nunca valores reais)
+8. **Gerar comandos** prontos para copiar e colar com placeholders
+9. **Arquivar** Task, Plan e SDD em `google_play/arquivos/`
 
 ---
 

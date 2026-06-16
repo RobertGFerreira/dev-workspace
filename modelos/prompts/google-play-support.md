@@ -1,7 +1,7 @@
 # Prompt: google-play-support
 
 **Categoria:** Publicação e Distribuição
-**Versão:** `3.0.0`
+**Versão:** `4.0.0`
 
 ---
 
@@ -12,12 +12,13 @@ Organizar, padronizar e documentar todo o processo de publicação de aplicativo
 Criar estrutura reutilizável por aplicativo com:
 1. auditoria de arquivos relacionados ao Google
 2. separação entre dados operacionais e dados sensíveis
-3. manual passo a passo de publicação
-4. respostas prontas para copiar e colar no Play Console
-5. análise de permissões do app
-6. geração orientada de comandos para keystore/upload key
-7. SDD sempre dizendo o que precisa e o que não precisa
-8. arquivamento de Task, Plan e SDD
+3. templates padronizados copiados de `modelos/docs/google-play/`
+4. manual passo a passo de publicação
+5. respostas prontas para copiar e colar no Play Console
+6. análise de permissões do app
+7. geração orientada de comandos para keystore/upload key
+8. SDD sempre dizendo o que precisa e o que não precisa
+9. arquivamento de Task, Plan e SDD
 
 ---
 
@@ -47,20 +48,27 @@ Criar estrutura reutilizável por aplicativo com:
 6. **Permissões**: gerar `google_play/permissoes-app.md` com permissão encontrada, onde foi encontrada, para que existe, se exige atenção no Play Console, texto sugerido, alerta se excessiva.
 7. **Data Safety**: gerar respostas estruturadas baseadas no código, sem inventar coleta não confirmada. Sinalizar dúvida para validação humana.
 8. **Keystore**: gerar apenas comandos orientativos com placeholders. Nunca versionar keystore real ou senha.
-9. **Arquivamento**: ao final, mover Task, Plan e SDD para `google_play/arquivos/tasks/`, `google_play/arquivos/plans/`, `google_play/arquivos/sdds/`.
+9. **Templates**: copiar arquivos de `modelos/docs/google-play/` como base para `google_play/` no app. Preencher com dados reais extraídos, mantendo placeholders para dados sensíveis.
+10. **Arquivamento**: ao final, mover Task, Plan e SDD para `google_play/arquivos/tasks/`, `google_play/arquivos/plans/`, `google_play/arquivos/sdds/`.
 
 ---
 
 ## Estrutura a criar/manter
 
+Copiar templates de `modelos/docs/google-play/` como base, preenchendo
+com dados extraídos do projeto:
+
 ```
-google_play/README.md
-google_play/manual-publicacao.md
-google_play/respostas-play-console.md
-google_play/permissoes-app.md
-google_play/politica-privacidade.md
-google_play/versoes-e-notas.md
-google_play/comandos/
+google_play/README.md                              ← copiar de modelos/docs/google-play/README.md
+google_play/dados-aplicativo.md                    ← copiar de dados-aplicativo.template.md
+google_play/dados-sensiveis.md                     ← copiar de dados-sensiveis.template.md (NUNCA versionar valores reais)
+google_play/manual-publicacao.md                   ← copiar de tutorial-cadastro-e-publicacao-google-play.template.md
+google_play/respostas-play-console.md              ← copiar de respostas-play-console.template.md
+google_play/permissoes-app.md                      ← copiar de permissoes-e-politicas.template.md
+google_play/comandos/gerar-keystore.md             ← copiar de comandos/gerar-keystore.template.md
+google_play/comandos/exportar-pem.md               ← copiar de comandos/exportar-pem.template.md
+google_play/comandos/mover-arquivos.md             ← copiar de comandos/mover-arquivos.template.md
+google_play/comandos/ajustar-configuracao-android.md ← copiar de comandos/ajustar-configuracao-android.template.md
 google_play/artefatos/
 google_play/arquivos/tasks/
 google_play/arquivos/plans/
